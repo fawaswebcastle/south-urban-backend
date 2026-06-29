@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_shared_hero_slides",
+  "info": {
+    "displayName": "Hero Slide"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "headingPrefix": {
+      "type": "string"
+    },
+    "headingHighlighted": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "ctaText": {
+      "type": "string"
+    },
+    "ctaLink": {
+      "type": "string"
+    },
+    "secondaryCtaText": {
+      "type": "string"
+    },
+    "secondaryCtaLink": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}
