@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "loans_banners",
+  "info": {
+    "singularName": "loans-banner",
+    "pluralName": "loans-banners",
+    "displayName": "loans-banner"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "ctaText": {
+      "type": "string"
+    },
+    "ctaLink": {
+      "type": "string"
+    }
+  }
+}
