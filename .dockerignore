@@ -1,0 +1,10 @@
+.tmp/
+.cache/
+.git/
+.env
+build/
+dist/
+node_modules/
+public/uploads/
+database/
+*.log
