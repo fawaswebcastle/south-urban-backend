@@ -213,7 +213,7 @@ pipeline {
 
                         # Refresh global GitLab registry credentials
                         REGISTRY_ID=\$(api "\$DOKPLOY_API/registry.all" | \\
-                            jq -r --arg name "GitLab Registry" \\
+                            jq -r --arg name "GitLab Backend Registry" \\
                             '.[] | select(.registryName == \$name) | .registryId' | head -1)
                         if [ -n "\$REGISTRY_ID" ] && [ "\$REGISTRY_ID" != "null" ]; then
                             api -X POST "\$DOKPLOY_API/registry.update" \\
@@ -221,18 +221,18 @@ pipeline {
                                     --arg id "\$REGISTRY_ID" \\
                                     --arg user "\$CI_REGISTRY_USER" \\
                                     --arg pass "\$CI_REGISTRY_PASSWORD" \\
-                                    --arg prefix "${GITLAB_REGISTRY}/${NAMESPACE}" \\
+                                    --arg prefix "${GITLAB_REGISTRY}/${NAMESPACE}/${PROJECT_NAME}" \\
                                     '{"registryId":\$id,"username":\$user,"password":\$pass,"imagePrefix":\$prefix}')" > /dev/null
                             echo "  Registry credentials refreshed."
                         else
                             echo "  Registry not found. Creating a new registry..."
                             CREATE_REG=\$(api -X POST "\$DOKPLOY_API/registry.create" \\
                                 -d "\$(jq -n \\
-                                    --arg name "GitLab Registry" \\
+                                    --arg name "GitLab Backend Registry" \\
                                     --arg user "\$CI_REGISTRY_USER" \\
                                     --arg pass "\$CI_REGISTRY_PASSWORD" \\
                                     --arg url "${GITLAB_REGISTRY}" \\
-                                    --arg prefix "${GITLAB_REGISTRY}/${NAMESPACE}" \\
+                                    --arg prefix "${GITLAB_REGISTRY}/${NAMESPACE}/${PROJECT_NAME}" \\
                                     '{"registryName":\$name,"username":\$user,"password":\$pass,"registryUrl":\$url,"registryType":"cloud","imagePrefix":\$prefix}')")
                             REGISTRY_ID=\$(echo "\$CREATE_REG" | jq -r '.registryId')
                             echo "  Created registry: \$REGISTRY_ID"
