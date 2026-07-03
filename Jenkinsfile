@@ -55,8 +55,7 @@ pipeline {
             }
             steps {
                 withCredentials([
-                    string(credentialsId: 'CI_REGISTRY_USER',     variable: 'CI_REGISTRY_USER'),
-                    string(credentialsId: 'CI_REGISTRY_PASSWORD', variable: 'CI_REGISTRY_PASSWORD')
+                    usernamePassword(credentialsId: 'JENKINS_V2_GITPAT', usernameVariable: 'CI_REGISTRY_USER', passwordVariable: 'CI_REGISTRY_PASSWORD')
                 ]) {
                     sh """
                         echo \$CI_REGISTRY_PASSWORD | docker login ${GITLAB_REGISTRY} \
@@ -74,8 +73,7 @@ pipeline {
             steps {
                 withCredentials([
                     string(credentialsId: 'DOKPLOY_API_KEY',      variable: 'DOKPLOY_API_KEY'),
-                    string(credentialsId: 'CI_REGISTRY_USER',     variable: 'CI_REGISTRY_USER'),
-                    string(credentialsId: 'CI_REGISTRY_PASSWORD', variable: 'CI_REGISTRY_PASSWORD'),
+                    usernamePassword(credentialsId: 'JENKINS_V2_GITPAT', usernameVariable: 'CI_REGISTRY_USER', passwordVariable: 'CI_REGISTRY_PASSWORD'),
                     [
                         $class: 'VaultTokenCredentialBinding',
                         credentialsId: env.VAULT_CRED_ID,
@@ -190,19 +188,22 @@ pipeline {
                             '.environments[] | select(.name == \$envName) | .applications[] | select(.name == \$appName) | .applicationId' \\
                             /tmp/project_detail.json 2>/dev/null | head -1)
 
-                        if [ -z "\$APP_ID" ] || [ "\$APP_ID" = "null" ]; then
-                            echo "  App not found — creating '${DOKPLOY_APP_NAME}'..."
-                            CREATE_APP=\$(api -X POST "\$DOKPLOY_API/application.create" \\
-                                -d "\$(jq -n \\
-                                    --arg name "${DOKPLOY_APP_NAME}" \\
-                                    --arg projectId "\$PROJECT_ID" \\
-                                    --arg envId "\$ENV_ID" \\
-                                    '{"name":\$name,"projectId":\$projectId,"environmentId":\$envId}')")
-                            APP_ID=\$(echo "\$CREATE_APP" | jq -r '.applicationId')
-                            echo "  Created application: \$APP_ID"
-                        else
-                            echo "  Found application: \$APP_ID"
+                        if [ -n "\$APP_ID" ] && [ "\$APP_ID" != "null" ]; then
+                            echo "  Found application: \$APP_ID. Deleting it for a clean state..."
+                            api -X POST "\$DOKPLOY_API/application.delete" \\
+                                -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')" > /dev/null || true
+                            APP_ID=""
                         fi
+
+                        echo "  Creating '${DOKPLOY_APP_NAME}'..."
+                        CREATE_APP=\$(api -X POST "\$DOKPLOY_API/application.create" \\
+                            -d "\$(jq -n \\
+                                --arg name "${DOKPLOY_APP_NAME}" \\
+                                --arg projectId "\$PROJECT_ID" \\
+                                --arg envId "\$ENV_ID" \\
+                                '{"name":\$name,"projectId":\$projectId,"environmentId":\$envId}')")
+                        APP_ID=\$(echo "\$CREATE_APP" | jq -r '.applicationId')
+                        echo "  Created application: \$APP_ID"
 
                         if [ -z "\$APP_ID" ] || [ "\$APP_ID" = "null" ]; then
                             echo "[ERROR] Could not resolve APP_ID." >&2; exit 1
