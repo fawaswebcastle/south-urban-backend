@@ -44,7 +44,7 @@ pipeline {
         // ── Build ─────────────────────────────────────────────   
         stage('Build') {
             steps {
-                sh "docker build --no-cache -t ${IMAGE_TAG} -t ${IMAGE_LATEST} ."
+                sh "docker build -t ${IMAGE_TAG} -t ${IMAGE_LATEST} ."
             }
         }
 
