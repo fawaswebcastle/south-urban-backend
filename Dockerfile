@@ -43,9 +43,8 @@ ENV PATH=/opt/app/node_modules/.bin:$PATH
 # Create required directories for Strapi
 RUN mkdir -p /opt/app/public/uploads /opt/app/database
 
-# Change ownership of the app directory to the node user
+# Change ownership of the app directory to the node user (optional if running as root, but good practice)
 RUN chown -R node:node /opt/app
-USER node
 
 EXPOSE 1337
 
