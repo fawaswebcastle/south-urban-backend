@@ -55,8 +55,7 @@ pipeline {
             }
             steps {
                 withCredentials([
-                    string(credentialsId: 'CI_REGISTRY_USER',     variable: 'CI_REGISTRY_USER'),
-                    string(credentialsId: 'CI_REGISTRY_PASSWORD', variable: 'CI_REGISTRY_PASSWORD')
+                    usernamePassword(credentialsId: 'JENKINS_V2_GITPAT', usernameVariable: 'CI_REGISTRY_USER', passwordVariable: 'CI_REGISTRY_PASSWORD')
                 ]) {
                     sh """
                         echo \$CI_REGISTRY_PASSWORD | docker login ${GITLAB_REGISTRY} \
@@ -74,8 +73,7 @@ pipeline {
             steps {
                 withCredentials([
                     string(credentialsId: 'DOKPLOY_API_KEY',      variable: 'DOKPLOY_API_KEY'),
-                    string(credentialsId: 'CI_REGISTRY_USER',     variable: 'CI_REGISTRY_USER'),
-                    string(credentialsId: 'CI_REGISTRY_PASSWORD', variable: 'CI_REGISTRY_PASSWORD'),
+                    usernamePassword(credentialsId: 'JENKINS_V2_GITPAT', usernameVariable: 'CI_REGISTRY_USER', passwordVariable: 'CI_REGISTRY_PASSWORD'),
                     [
                         $class: 'VaultTokenCredentialBinding',
                         credentialsId: env.VAULT_CRED_ID,
