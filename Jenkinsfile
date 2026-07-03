@@ -222,7 +222,7 @@ pipeline {
                                     --arg id "\$REGISTRY_ID" \\
                                     --arg user "\$CI_REGISTRY_USER" \\
                                     --arg pass "\$CI_REGISTRY_PASSWORD" \\
-                                    --arg prefix "${GITLAB_REGISTRY}/${NAMESPACE}/${PROJECT_NAME}" \\
+                                    --arg prefix "${NAMESPACE}" \\
                                     '{"registryId":\$id,"username":\$user,"password":\$pass,"imagePrefix":\$prefix}')" > /dev/null
                             echo "  Registry credentials refreshed."
                         else
@@ -233,7 +233,7 @@ pipeline {
                                     --arg user "\$CI_REGISTRY_USER" \\
                                     --arg pass "\$CI_REGISTRY_PASSWORD" \\
                                     --arg url "${GITLAB_REGISTRY}" \\
-                                    --arg prefix "${GITLAB_REGISTRY}/${NAMESPACE}/${PROJECT_NAME}" \\
+                                    --arg prefix "${NAMESPACE}" \\
                                     '{"registryName":\$name,"username":\$user,"password":\$pass,"registryUrl":\$url,"registryType":"cloud","imagePrefix":\$prefix}')")
                             REGISTRY_ID=\$(echo "\$CREATE_REG" | jq -r '.registryId')
                             echo "  Created registry: \$REGISTRY_ID"
