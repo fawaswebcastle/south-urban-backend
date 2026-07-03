@@ -40,6 +40,9 @@ COPY --from=build /opt/app ./
 # Add node_modules/.bin to PATH
 ENV PATH=/opt/app/node_modules/.bin:$PATH
 
+# Create required directories for Strapi
+RUN mkdir -p /opt/app/public/uploads /opt/app/database
+
 # Change ownership of the app directory to the node user
 RUN chown -R node:node /opt/app
 USER node
