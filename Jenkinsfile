@@ -25,7 +25,7 @@ pipeline {
 
     stages {
 
-        // ── Build ─────────────────────────────────────────────
+        // ── Build ─────────────────────────────────────────────   
         stage('Build') {
             steps {
                 sh "docker build --no-cache -t ${IMAGE_TAG} -t ${IMAGE_LATEST} ."
@@ -197,15 +197,16 @@ pipeline {
 
                         # Refresh global GitLab registry credentials
                         REGISTRY_ID=\$(api "\$DOKPLOY_API/registry.all" | \\
-                            jq -r --arg host "${GITLAB_REGISTRY}" \\
-                            '.[] | select(.registryUrl | test(\$host; "i")) | .registryId' | head -1)
+                            jq -r --arg name "GitLab Registry" \\
+                            '.[] | select(.registryName == \$name) | .registryId' | head -1)
                         if [ -n "\$REGISTRY_ID" ] && [ "\$REGISTRY_ID" != "null" ]; then
                             api -X POST "\$DOKPLOY_API/registry.update" \\
                                 -d "\$(jq -n \\
                                     --arg id "\$REGISTRY_ID" \\
                                     --arg user "\$CI_REGISTRY_USER" \\
                                     --arg pass "\$CI_REGISTRY_PASSWORD" \\
-                                    '{"registryId":\$id,"username":\$user,"password":\$pass}')" > /dev/null
+                                    --arg prefix "${GITLAB_REGISTRY}/${NAMESPACE}" \\
+                                    '{"registryId":\$id,"username":\$user,"password":\$pass,"imagePrefix":\$prefix}')" > /dev/null
                             echo "  Registry credentials refreshed."
                         else
                             echo "  Registry not found. Creating a new registry..."
