@@ -10,24 +10,36 @@ pipeline {
         IMAGE_TAG        = "${IMAGE}:${env.BUILD_NUMBER}"
         IMAGE_LATEST     = "${IMAGE}:latest"
 
-        // ── Dynamic Environment (Dev vs Production) ───────────
-        // Uses 'production' if branch is main/master, otherwise 'dev'
-        TARGET_ENV       = (env.GIT_BRANCH ==~ /.*(main|master)$/ || env.BRANCH_NAME ==~ /.*(main|master)$/) ? 'production' : 'dev'
-        
         // ── Vault ─────────────────────────────────────────────
         VAULT_CRED_ID    = 'VAULT-TOKEN'                        // Jenkins credential ID for Vault token
         VAULT_ADDR       = 'https://vault.devops.previewbay.com'
-        VAULT_SECRET     = "south-indian-urban/data/backend/${TARGET_ENV}" // ← CONFIGURE: Vault KV path
+        // VAULT_SECRET is set dynamically in the Init stage
 
         // ── Dokploy ───────────────────────────────────────────
         DOKPLOY_URL          = 'https://wc-1.previewbay.com'
         DOKPLOY_APP_NAME     = 'south-indian-urban-backend'                     // ← CONFIGURE: app name in Dokploy
         DOKPLOY_PROJECT_NAME = 'south-indian-urban'                         // ← CONFIGURE: Dokploy project name
-        DOKPLOY_ENV_NAME     = "${TARGET_ENV}"
+        // DOKPLOY_ENV_NAME is set dynamically in the Init stage
         APP_PORT             = '1337'                           // ← CONFIGURE: port your app listens on
     }
 
     stages {
+
+        // ── Init ──────────────────────────────────────────────
+        stage('Init') {
+            steps {
+                script {
+                    def branch = env.GIT_BRANCH ?: env.BRANCH_NAME ?: ''
+                    def target = (branch ==~ /.*(main|master)$/) ? 'production' : 'dev'
+                    
+                    env.TARGET_ENV = target
+                    env.VAULT_SECRET = "south-indian-urban/data/backend/${target}"
+                    env.DOKPLOY_ENV_NAME = target
+                    
+                    echo "Configured for environment: ${target} (branch: ${branch})"
+                }
+            }
+        }
 
         // ── Build ─────────────────────────────────────────────   
         stage('Build') {
