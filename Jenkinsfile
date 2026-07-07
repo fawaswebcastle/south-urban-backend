@@ -188,22 +188,15 @@ pipeline {
                             '.environments[] | select(.name == \$envName) | .applications[] | select(.name == \$appName) | .applicationId' \\
                             /tmp/project_detail.json 2>/dev/null | head -1)
 
-                        if [ -n "\$APP_ID" ] && [ "\$APP_ID" != "null" ]; then
-                            echo "  Found application: \$APP_ID. Deleting it for a clean state..."
-                            api -X POST "\$DOKPLOY_API/application.delete" \\
-                                -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')" > /dev/null || true
-                            APP_ID=""
+                        if [ -z "\$APP_ID" ] || [ "\$APP_ID" == "null" ]; then
+                            echo "  Creating '${DOKPLOY_APP_NAME}'..."
+                            CREATE_APP=\$(api -X POST "\$DOKPLOY_API/application.create" \\
+                                -d "\$(jq -n --arg name "${DOKPLOY_APP_NAME}" --arg proj "\$PROJECT_ID" --arg envId "\$ENV_ID" '{"name":\$name,"projectId":\$proj,"environmentId":\$envId}')")
+                            APP_ID=\$(echo "\$CREATE_APP" | jq -r '.applicationId')
+                            echo "  Created application with ID: \$APP_ID"
+                        else
+                            echo "  Found existing application: \$APP_ID. Updating it..."
                         fi
-
-                        echo "  Creating '${DOKPLOY_APP_NAME}'..."
-                        CREATE_APP=\$(api -X POST "\$DOKPLOY_API/application.create" \\
-                            -d "\$(jq -n \\
-                                --arg name "${DOKPLOY_APP_NAME}" \\
-                                --arg projectId "\$PROJECT_ID" \\
-                                --arg envId "\$ENV_ID" \\
-                                '{"name":\$name,"projectId":\$projectId,"environmentId":\$envId}')")
-                        APP_ID=\$(echo "\$CREATE_APP" | jq -r '.applicationId')
-                        echo "  Created application: \$APP_ID"
 
                         if [ -z "\$APP_ID" ] || [ "\$APP_ID" = "null" ]; then
                             echo "[ERROR] Could not resolve APP_ID." >&2; exit 1
