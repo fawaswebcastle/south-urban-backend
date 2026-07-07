@@ -245,23 +245,26 @@ pipeline {
 
                         # ── 5. Domain + Let's Encrypt cert ─────────────────────
                         echo "[5/5] Configuring domain and certificate..."
-                        EXISTING_DOMAIN=\$(curl -sf \\
+                        DOMAIN_ID=\$(curl -sf \\
                             -H "x-api-key: \$DOKPLOY_API_KEY" \\
                             -H "Content-Type: application/json" \\
                             "\$DOKPLOY_API/application.one?applicationId=\$APP_ID" | \\
                             jq -r --arg host "\$APP_DOMAIN" \\
-                            '[.domains[]? | select(.host == \$host)] | length' 2>/dev/null || echo "0")
-                        if [ "\$EXISTING_DOMAIN" = "0" ] || [ -z "\$EXISTING_DOMAIN" ]; then
-                            api -X POST "\$DOKPLOY_API/domain.create" \\
-                                -d "\$(jq -n \\
-                                    --arg appId "\$APP_ID" \\
-                                    --arg host "\$APP_DOMAIN" \\
-                                    --argjson port ${APP_PORT} \\
-                                    '{"applicationId":\$appId,"host":\$host,"port":\$port,"https":true,"certificateType":"letsencrypt","path":"/"}')" > /dev/null || echo "  [WARNING] Domain creation failed (it might already exist)."
-                            echo "  Domain \$APP_DOMAIN created with Let's Encrypt."
-                        else
-                            echo "  Domain \$APP_DOMAIN already configured."
+                            '.domains[]? | select(.host == \$host) | .domainId' 2>/dev/null || echo "")
+
+                        if [ -n "\$DOMAIN_ID" ] && [ "\$DOMAIN_ID" != "null" ]; then
+                            echo "  Deleting existing domain \$APP_DOMAIN (ID: \$DOMAIN_ID) to resync port..."
+                            api -X POST "\$DOKPLOY_API/domain.delete" \\
+                                -d "\$(jq -n --arg id "\$DOMAIN_ID" '{"domainId":\$id}')" > /dev/null || true
                         fi
+
+                        api -X POST "\$DOKPLOY_API/domain.create" \\
+                            -d "\$(jq -n \\
+                                --arg appId "\$APP_ID" \\
+                                --arg host "\$APP_DOMAIN" \\
+                                --argjson port ${APP_PORT} \\
+                                '{"applicationId":\$appId,"host":\$host,"port":\$port,"https":true,"certificateType":"letsencrypt","path":"/"}')" > /dev/null || echo "  [WARNING] Domain creation failed."
+                        echo "  Domain \$APP_DOMAIN created/updated with Let's Encrypt."
 
                         api -X POST "\$DOKPLOY_API/application.deploy" \\
                             -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')"
