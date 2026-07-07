@@ -54,6 +54,7 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
         afterCreate: (conn: any, cb: any) => {
           try {
             conn.pragma('journal_mode = WAL');
+            conn.pragma('busy_timeout = 5000');
             cb(null, conn);
           } catch (err) {
             cb(err, conn);
