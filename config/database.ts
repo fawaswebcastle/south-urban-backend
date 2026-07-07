@@ -50,9 +50,12 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
       useNullAsDefault: true,
       pool: {
         afterCreate: (conn: any, cb: any) => {
-          conn.run('PRAGMA journal_mode = WAL;', () => {
-            cb();
-          });
+          try {
+            conn.pragma('journal_mode = WAL');
+            cb(null, conn);
+          } catch (err) {
+            cb(err, conn);
+          }
         },
       },
     },
