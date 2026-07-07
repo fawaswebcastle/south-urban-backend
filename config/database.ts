@@ -49,6 +49,8 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
       },
       useNullAsDefault: true,
       pool: {
+        min: env.int('DATABASE_POOL_MIN', 2),
+        max: env.int('DATABASE_POOL_MAX', 40),
         afterCreate: (conn: any, cb: any) => {
           try {
             conn.pragma('journal_mode = WAL');
