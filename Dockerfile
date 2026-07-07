@@ -48,8 +48,4 @@ RUN chown -R node:node /opt/app
 
 EXPOSE 1337
 
-# Add a healthcheck to automatically restart if Strapi freezes
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD wget --spider -q http://localhost:1337/_health || exit 1
-
 CMD ["npm", "run", "start"]
