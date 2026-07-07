@@ -266,6 +266,12 @@ pipeline {
                                 '{"applicationId":\$appId,"host":\$host,"port":\$port,"https":true,"certificateType":"letsencrypt","path":"/"}')" > /dev/null || echo "  [WARNING] Domain creation failed."
                         echo "  Domain \$APP_DOMAIN created/updated with Let's Encrypt."
 
+                        api -X POST "\$DOKPLOY_API/application.stop" \\
+                            -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')" > /dev/null || echo "  [WARNING] Could not stop application."
+                        
+                        echo "  Waiting for old container to stop and release database locks..."
+                        sleep 5
+
                         api -X POST "\$DOKPLOY_API/application.deploy" \\
                             -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')"
                         echo "  Deployment triggered! https://\$APP_DOMAIN"
