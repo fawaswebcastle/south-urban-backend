@@ -1,11 +1,11 @@
-FROM node:20-alpine AS build
+FROM node:20-bookworm-slim AS build
 
-# Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev vips-dev git > /dev/null 2>&1
+# Installing libvips-dev for sharp Compatibility and build tools for native modules
+RUN apt-get update && apt-get install -y build-essential gcc autoconf automake zlib1g-dev libpng-dev libvips-dev git > /dev/null 2>&1
 
 # Set the environment variable for production
 ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=\${NODE_ENV}
 
 WORKDIR /opt/
 
@@ -22,14 +22,14 @@ RUN npm run build
 # ==========================================
 # Production Stage
 # ==========================================
-FROM node:20-alpine
+FROM node:20-bookworm-slim
 
 # Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache vips-dev
+RUN apt-get update && apt-get install -y libvips-dev && rm -rf /var/lib/apt/lists/*
 
 # Set the environment variable for production
 ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=\${NODE_ENV}
 
 WORKDIR /opt/app
 
@@ -38,12 +38,12 @@ COPY --from=build /opt/node_modules ./node_modules
 COPY --from=build /opt/app ./
 
 # Add node_modules/.bin to PATH
-ENV PATH=/opt/app/node_modules/.bin:$PATH
+ENV PATH=/opt/app/node_modules/.bin:\$PATH
 
 # Create required directories for Strapi
 RUN mkdir -p /opt/app/public/uploads /opt/app/database
 
-# Change ownership of the app directory to the node user (optional if running as root, but good practice)
+# Change ownership of the app directory to the node user
 RUN chown -R node:node /opt/app
 
 EXPOSE 3000
