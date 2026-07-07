@@ -48,6 +48,13 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Database 
         filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', 'database/data.db')),
       },
       useNullAsDefault: true,
+      pool: {
+        afterCreate: (conn: any, cb: any) => {
+          conn.run('PRAGMA journal_mode = WAL;', () => {
+            cb();
+          });
+        },
+      },
     },
   };
 
