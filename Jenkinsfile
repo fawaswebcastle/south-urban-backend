@@ -116,7 +116,7 @@ pipeline {
                             then "\\(.key)=\\(.value | join(","))"
                             else "\\(.key)=\\(.value | tostring)"
                             end
-                        ' | sed 's/^PORT=1337$/PORT=3000/g' | jq -Rs .)
+                        ' | sed 's/PORT=1337/PORT=3000/g' | jq -Rs .)
                         echo "  Env vars fetched."
 
                         # ── 1. Resolve PROJECT_ID ──────────────────────────────
