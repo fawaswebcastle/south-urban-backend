@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y build-essential gcc autoconf automake z
 
 # Set the environment variable for production
 ARG NODE_ENV=production
-ENV NODE_ENV=\${NODE_ENV}
+ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/
 
@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -y libvips-dev && rm -rf /var/lib/apt/list
 
 # Set the environment variable for production
 ARG NODE_ENV=production
-ENV NODE_ENV=\${NODE_ENV}
+ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /opt/app
 
@@ -38,7 +38,7 @@ COPY --from=build /opt/node_modules ./node_modules
 COPY --from=build /opt/app ./
 
 # Add node_modules/.bin to PATH
-ENV PATH=/opt/app/node_modules/.bin:\$PATH
+ENV PATH=/opt/app/node_modules/.bin:$PATH
 
 # Create required directories for Strapi
 RUN mkdir -p /opt/app/public/uploads /opt/app/database
