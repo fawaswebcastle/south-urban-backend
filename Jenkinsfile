@@ -83,11 +83,7 @@ pipeline {
                     sh """
                         set -e
                         DOKPLOY_API="${DOKPLOY_URL}/api"
-                        if [ "$DOKPLOY_ENV_NAME" = "production" ]; then
-                            APP_DOMAIN="${DOKPLOY_APP_NAME}.wc-1.previewbay.com"
-                        else
-                            APP_DOMAIN="${DOKPLOY_ENV_NAME}-${DOKPLOY_APP_NAME}.wc-1.previewbay.com"
-                        fi
+                        APP_DOMAIN="${DOKPLOY_APP_NAME}.wc-1.previewbay.com"
 
                         # ── Helper: Dokploy API with HTTP status check ─────────
                         api() {
