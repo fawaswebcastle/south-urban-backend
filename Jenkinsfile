@@ -238,11 +238,18 @@ pipeline {
                             --argjson port ${APP_PORT} \\
                             --argjson env "\$ENV_VARS" \\
                             --arg regId "\$REGISTRY_ID" \\
-                            --arg appName "${DOKPLOY_APP_NAME}" \\
-                            --arg envName "${DOKPLOY_ENV_NAME}" \\
-                            '{"applicationId":\$appId,"sourceType":"docker","dockerImage":\$img,"port":\$port,"env":\$env,"mounts":[{"type":"bind","hostPath":"/var/lib/dokploy/volumes/\\(\$appName)-\\(\$envName)-uploads","mountPath":"/opt/app/public/uploads"},{"type":"bind","hostPath":"/var/lib/dokploy/volumes/\\(\$appName)-\\(\$envName)-database","mountPath":"/opt/app/database"}]} + (if \$regId != "" and \$regId != "null" then {"registryId":\$regId} else {} end)')
+                            '{"applicationId":\$appId,"sourceType":"docker","dockerImage":\$img,"port":\$port,"env":\$env} + (if \$regId != "" and \$regId != "null" then {"registryId":\$regId} else {} end)')
                         api -X POST "\$DOKPLOY_API/application.update" -d "\$UPDATE_PAYLOAD" > /dev/null
                         echo "  Image and env updated."
+                        
+                        echo "  Configuring persistent volume mounts..."
+                        # Mount 1: Uploads
+                        api -X POST "\$DOKPLOY_API/mount.create" \\
+                            -d "\$(jq -n --arg appId "\$APP_ID" --arg hostPath "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-uploads" --arg mountPath "/opt/app/public/uploads" '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null || echo "  [INFO] Uploads mount already exists or could not be created."
+                        
+                        # Mount 2: Database
+                        api -X POST "\$DOKPLOY_API/mount.create" \\
+                            -d "\$(jq -n --arg appId "\$APP_ID" --arg hostPath "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-database" --arg mountPath "/opt/app/database" '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null || echo "  [INFO] Database mount already exists or could not be created."
 
                         # ── 5. Domain + Let's Encrypt cert ─────────────────────
                         echo "[5/5] Configuring domain and certificate..."
