@@ -19,6 +19,10 @@
     },
     "tags": {
       "type": "string"
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
     }
   },
   "config": {}
