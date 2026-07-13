@@ -50,6 +50,7 @@ export interface SharedJobPosition extends Struct.ComponentSchema {
   };
   attributes: {
     department: Schema.Attribute.String;
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     location: Schema.Attribute.String;
     tags: Schema.Attribute.String;
     title: Schema.Attribute.String;
