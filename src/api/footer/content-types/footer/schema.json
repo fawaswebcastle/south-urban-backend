@@ -64,6 +64,12 @@
     },
     "poweredByLink": {
       "type": "string"
+    },
+    "quickLinksHeader": {
+      "type": "string"
+    },
+    "contactHeader": {
+      "type": "string"
     }
   }
 }

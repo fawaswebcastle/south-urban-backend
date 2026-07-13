@@ -515,9 +515,12 @@ export interface ApiCareersSectionCareersSection
     draftAndPublish: true;
   };
   attributes: {
+    applyText: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    ctaLink: Schema.Attribute.String;
+    ctaText: Schema.Attribute.String;
     description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     jobs: Schema.Attribute.Component<'shared.job-position', true>;
@@ -581,6 +584,7 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    contactHeader: Schema.Attribute.String;
     copyrightText: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -601,6 +605,7 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
     poweredByLogo: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     quickLinks: Schema.Attribute.Component<'shared.link', true>;
+    quickLinksHeader: Schema.Attribute.String;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
     twitterLink: Schema.Attribute.String;
