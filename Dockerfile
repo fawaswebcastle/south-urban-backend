@@ -46,7 +46,6 @@ RUN mkdir -p /opt/app/public/uploads /opt/app/database
 # Change ownership of the app directory to the node user
 RUN chown -R node:node /opt/app
 
-ENV PORT=3000
-EXPOSE 3000
+EXPOSE 1337
 
 CMD ["npm", "run", "start"]

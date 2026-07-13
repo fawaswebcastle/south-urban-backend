@@ -20,7 +20,7 @@ pipeline {
         DOKPLOY_APP_NAME     = 'south-indian-urban-backend'                     // ← CONFIGURE: app name in Dokploy
         DOKPLOY_PROJECT_NAME = 'south-indian-urban'                         // ← CONFIGURE: Dokploy project name
         // DOKPLOY_ENV_NAME is set dynamically in the Init stage
-        APP_PORT             = '3000'                           // ← CONFIGURE: port your app listens on
+        APP_PORT             = '1337'                           // ← CONFIGURE: port your app listens on
     }
 
     stages {
