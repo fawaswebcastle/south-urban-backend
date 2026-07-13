@@ -238,18 +238,13 @@ pipeline {
                             --argjson port ${APP_PORT} \\
                             --argjson env "\$ENV_VARS" \\
                             --arg regId "\$REGISTRY_ID" \\
-                            '{"applicationId":\$appId,"sourceType":"docker","dockerImage":\$img,"port":\$port,"env":\$env} + (if \$regId != "" and \$regId != "null" then {"registryId":\$regId} else {} end)')
+                            --arg m1_host "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-uploads" \\
+                            --arg m1_mount "/opt/app/public/uploads" \\
+                            --arg m2_host "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-database" \\
+                            --arg m2_mount "/opt/app/database" \\
+                            '{"applicationId":\$appId,"sourceType":"docker","dockerImage":\$img,"port":\$port,"env":\$env,"mounts":[{"type":"bind","hostPath":\$m1_host,"mountPath":\$m1_mount},{"type":"bind","hostPath":\$m2_host,"mountPath":\$m2_mount}]} + (if \$regId != "" and \$regId != "null" then {"registryId":\$regId} else {} end)')
                         api -X POST "\$DOKPLOY_API/application.update" -d "\$UPDATE_PAYLOAD" > /dev/null
-                        echo "  Image and env updated."
-                        
-                        echo "  Configuring persistent volume mounts..."
-                        # Mount 1: Uploads
-                        api -X POST "\$DOKPLOY_API/mount.create" \\
-                            -d "\$(jq -n --arg appId "\$APP_ID" --arg hostPath "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-uploads" --arg mountPath "/opt/app/public/uploads" '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null || echo "  [INFO] Uploads mount already exists or could not be created."
-                        
-                        # Mount 2: Database
-                        api -X POST "\$DOKPLOY_API/mount.create" \\
-                            -d "\$(jq -n --arg appId "\$APP_ID" --arg hostPath "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-database" --arg mountPath "/opt/app/database" '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null || echo "  [INFO] Database mount already exists or could not be created."
+                        echo "  Image, env, and mounts updated."
 
                         # ── 5. Domain + Let's Encrypt cert ─────────────────────
                         echo "[5/5] Configuring domain and certificate..."
@@ -261,18 +256,16 @@ pipeline {
                             '.domains[]? | select(.host == \$host) | .domainId' 2>/dev/null || echo "")
 
                         if [ -n "\$DOMAIN_ID" ] && [ "\$DOMAIN_ID" != "null" ]; then
-                            echo "  Deleting existing domain \$APP_DOMAIN (ID: \$DOMAIN_ID) to resync port..."
-                            api -X POST "\$DOKPLOY_API/domain.delete" \\
-                                -d "\$(jq -n --arg id "\$DOMAIN_ID" '{"domainId":\$id}')" > /dev/null || true
+                            echo "  Domain \$APP_DOMAIN already exists (ID: \$DOMAIN_ID). Skipping recreation to avoid SSL rate limits."
+                        else
+                            api -X POST "\$DOKPLOY_API/domain.create" \\
+                                -d "\$(jq -n \\
+                                    --arg appId "\$APP_ID" \\
+                                    --arg host "\$APP_DOMAIN" \\
+                                    --argjson port ${APP_PORT} \\
+                                    '{"applicationId":\$appId,"host":\$host,"port":\$port,"https":true,"certificateType":"letsencrypt","path":"/"}')" > /dev/null || echo "  [WARNING] Domain creation failed."
+                            echo "  Domain \$APP_DOMAIN created with Let's Encrypt."
                         fi
-
-                        api -X POST "\$DOKPLOY_API/domain.create" \\
-                            -d "\$(jq -n \\
-                                --arg appId "\$APP_ID" \\
-                                --arg host "\$APP_DOMAIN" \\
-                                --argjson port ${APP_PORT} \\
-                                '{"applicationId":\$appId,"host":\$host,"port":\$port,"https":true,"certificateType":"letsencrypt","path":"/"}')" > /dev/null || echo "  [WARNING] Domain creation failed."
-                        echo "  Domain \$APP_DOMAIN created/updated with Let's Encrypt."
 
                         api -X POST "\$DOKPLOY_API/application.stop" \\
                             -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')" > /dev/null || echo "  [WARNING] Could not stop application."
