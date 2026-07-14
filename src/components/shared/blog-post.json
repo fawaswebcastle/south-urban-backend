@@ -26,6 +26,9 @@
     },
     "link": {
       "type": "string"
+    },
+    "linkLabel": {
+      "type": "string"
     }
   },
   "config": {}

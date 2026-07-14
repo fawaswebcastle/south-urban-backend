@@ -20,6 +20,7 @@ export interface SharedBlogPost extends Struct.ComponentSchema {
     description: Schema.Attribute.Text & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     link: Schema.Attribute.String;
+    linkLabel: Schema.Attribute.String;
     readTime: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -92,6 +93,7 @@ export interface SharedServiceItem extends Struct.ComponentSchema {
     description: Schema.Attribute.Text;
     iconName: Schema.Attribute.String;
     link: Schema.Attribute.String;
+    linkLabel: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
