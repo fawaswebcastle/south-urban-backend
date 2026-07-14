@@ -40,9 +40,6 @@
     },
     "ctaLink": {
       "type": "string"
-    },
-    "applyText": {
-      "type": "string"
     }
   }
 }
