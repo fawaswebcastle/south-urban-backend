@@ -493,7 +493,13 @@ export interface ApiBlogsSectionBlogsSection extends Struct.SingleTypeSchema {
       'api::blogs-section.blogs-section'
     > &
       Schema.Attribute.Private;
-    posts: Schema.Attribute.Component<'shared.blog-post', true>;
+    posts: Schema.Attribute.Component<'shared.blog-post', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+        },
+        number
+      >;
     publishedAt: Schema.Attribute.DateTime;
     tag: Schema.Attribute.String;
     title: Schema.Attribute.String;

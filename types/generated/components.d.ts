@@ -17,12 +17,20 @@ export interface SharedBlogPost extends Struct.ComponentSchema {
     displayName: 'blog-post';
   };
   attributes: {
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 102;
+      }>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     link: Schema.Attribute.String;
     linkLabel: Schema.Attribute.String;
     readTime: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 68;
+      }>;
   };
 }
 
@@ -92,11 +100,17 @@ export interface SharedServiceItem extends Struct.ComponentSchema {
     displayName: 'service-item';
   };
   attributes: {
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
     iconName: Schema.Attribute.String;
     link: Schema.Attribute.String;
     linkLabel: Schema.Attribute.String;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 28;
+      }>;
   };
 }
 
