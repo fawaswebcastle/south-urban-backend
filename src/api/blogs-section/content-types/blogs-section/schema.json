@@ -23,7 +23,8 @@
     "posts": {
       "type": "component",
       "component": "shared.blog-post",
-      "repeatable": true
+      "repeatable": true,
+      "max": 4
     },
     "ctaText": {
       "type": "string"

@@ -9,10 +9,12 @@
       "type": "string"
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "maxLength": 28
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 100
     },
     "link": {
       "type": "string"
