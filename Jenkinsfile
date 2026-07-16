@@ -279,33 +279,33 @@ pipeline {
                             "mkdir -p \$UPLOADS_HOST_PATH \$DATABASE_HOST_PATH"
                         echo "  Host directories ready."
 
+                        TRPC_INPUT=\$(jq -nr --arg id "\$APP_ID" '{"json":{"serviceId":\$id,"serviceType":"application"}}' | jq -sRr @uri)
                         EXISTING_MOUNTS=\$(curl -sf \\
                             -H "x-api-key: \$DOKPLOY_API_KEY" \\
-                            -H "Content-Type: application/json" \\
-                            "\$DOKPLOY_API/mount.listByServiceId?serviceId=\$APP_ID&serviceType=application" | \\
-                            jq -r '.[].mountPath' 2>/dev/null || echo "")
+                            "\${DOKPLOY_URL}/api/trpc/mount.listByServiceId?input=\${TRPC_INPUT}" | \\
+                            jq -r '.result.data.json[]?.mountPath' 2>/dev/null || echo "")
 
                         if echo "\$EXISTING_MOUNTS" | grep -qx "\$UPLOADS_CONTAINER_PATH"; then
                             echo "  Uploads mount already exists, skipping."
                         else
-                            api -X POST "\$DOKPLOY_API/mount.create" \\
+                            api -X POST "\${DOKPLOY_URL}/api/trpc/mount.create" \\
                                 -d "\$(jq -n \\
                                     --arg appId "\$APP_ID" \\
                                     --arg hostPath "\$UPLOADS_HOST_PATH" \\
                                     --arg mountPath "\$UPLOADS_CONTAINER_PATH" \\
-                                    '{"serviceId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                                    '{"json":{"serviceId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}}')" > /dev/null
                             echo "  Uploads mount created: \$UPLOADS_HOST_PATH -> \$UPLOADS_CONTAINER_PATH"
                         fi
 
                         if echo "\$EXISTING_MOUNTS" | grep -qx "\$DATABASE_CONTAINER_PATH"; then
                             echo "  Database mount already exists, skipping."
                         else
-                            api -X POST "\$DOKPLOY_API/mount.create" \\
+                            api -X POST "\${DOKPLOY_URL}/api/trpc/mount.create" \\
                                 -d "\$(jq -n \\
                                     --arg appId "\$APP_ID" \\
                                     --arg hostPath "\$DATABASE_HOST_PATH" \\
                                     --arg mountPath "\$DATABASE_CONTAINER_PATH" \\
-                                    '{"serviceId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                                    '{"json":{"serviceId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}}')" > /dev/null
                             echo "  Database mount created: \$DATABASE_HOST_PATH -> \$DATABASE_CONTAINER_PATH"
                         fi
 
