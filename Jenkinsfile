@@ -282,8 +282,8 @@ pipeline {
                         EXISTING_MOUNTS=\$(curl -sf \\
                             -H "x-api-key: \$DOKPLOY_API_KEY" \\
                             -H "Content-Type: application/json" \\
-                            "\$DOKPLOY_API/application.one?applicationId=\$APP_ID" | \\
-                            jq -r '.mounts[]?.mountPath' 2>/dev/null || echo "")
+                            "\$DOKPLOY_API/mount.listByServiceId?serviceId=\$APP_ID&serviceType=application" | \\
+                            jq -r '.[].mountPath' 2>/dev/null || echo "")
 
                         if echo "\$EXISTING_MOUNTS" | grep -qx "\$UPLOADS_CONTAINER_PATH"; then
                             echo "  Uploads mount already exists, skipping."
@@ -293,7 +293,7 @@ pipeline {
                                     --arg appId "\$APP_ID" \\
                                     --arg hostPath "\$UPLOADS_HOST_PATH" \\
                                     --arg mountPath "\$UPLOADS_CONTAINER_PATH" \\
-                                    '{"applicationId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                                    '{"serviceId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
                             echo "  Uploads mount created: \$UPLOADS_HOST_PATH -> \$UPLOADS_CONTAINER_PATH"
                         fi
 
@@ -305,7 +305,7 @@ pipeline {
                                     --arg appId "\$APP_ID" \\
                                     --arg hostPath "\$DATABASE_HOST_PATH" \\
                                     --arg mountPath "\$DATABASE_CONTAINER_PATH" \\
-                                    '{"applicationId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                                    '{"serviceId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
                             echo "  Database mount created: \$DATABASE_HOST_PATH -> \$DATABASE_CONTAINER_PATH"
                         fi
 
