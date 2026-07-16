@@ -293,7 +293,7 @@ pipeline {
                                     --arg appId "\$APP_ID" \\
                                     --arg hostPath "\$UPLOADS_HOST_PATH" \\
                                     --arg mountPath "\$UPLOADS_CONTAINER_PATH" \\
-                                    '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                                    '{"applicationId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
                             echo "  Uploads mount created: \$UPLOADS_HOST_PATH -> \$UPLOADS_CONTAINER_PATH"
                         fi
 
@@ -305,7 +305,7 @@ pipeline {
                                     --arg appId "\$APP_ID" \\
                                     --arg hostPath "\$DATABASE_HOST_PATH" \\
                                     --arg mountPath "\$DATABASE_CONTAINER_PATH" \\
-                                    '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                                    '{"applicationId":\$appId,"serviceType":"application","type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
                             echo "  Database mount created: \$DATABASE_HOST_PATH -> \$DATABASE_CONTAINER_PATH"
                         fi
 
