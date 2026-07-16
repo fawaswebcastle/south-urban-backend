@@ -90,7 +90,12 @@ pipeline {
                         $class: 'VaultTokenCredentialBinding',
                         credentialsId: env.VAULT_CRED_ID,
                         vaultAddr: env.VAULT_ADDR
-                    ]
+                    ],
+                    sshUserPrivateKey(
+                        credentialsId: 'WC1_SSH_KEY',
+                        keyFileVariable: 'SSH_KEY_FILE',
+                        usernameVariable: 'SSH_USER'
+                    )
                 ]) {
                     sh """
                         set -e
@@ -269,8 +274,9 @@ pipeline {
                         # ── 5/6  Volume mounts ──────────────────────────────────
                         echo "[5/6] Configuring persistent volume mounts..."
 
-                        mkdir -p "\$UPLOADS_HOST_PATH"
-                        mkdir -p "\$DATABASE_HOST_PATH"
+                        ssh -i "\$SSH_KEY_FILE" -o StrictHostKeyChecking=no \\
+                            "\$SSH_USER@${DOKPLOY_BASE_DOMAIN}" \\
+                            "mkdir -p \$UPLOADS_HOST_PATH \$DATABASE_HOST_PATH"
                         echo "  Host directories ready."
 
                         EXISTING_MOUNTS=\$(curl -sf \\
