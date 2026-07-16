@@ -6,7 +6,8 @@
   "options": {},
   "attributes": {
     "title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "type": {
       "type": "string"
@@ -23,6 +24,14 @@
     "isActive": {
       "type": "boolean",
       "default": true
+    },
+    "applyText": {
+      "type": "string",
+      "required": true
+    },
+    "applyLink": {
+      "type": "string",
+      "required": true
     }
   },
   "config": {}

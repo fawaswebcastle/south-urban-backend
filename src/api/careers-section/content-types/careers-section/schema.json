@@ -34,6 +34,12 @@
         "videos",
         "audios"
       ]
+    },
+    "ctaText": {
+      "type": "string"
+    },
+    "ctaLink": {
+      "type": "string"
     }
   }
 }
