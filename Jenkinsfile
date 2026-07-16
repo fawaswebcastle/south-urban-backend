@@ -4,23 +4,21 @@ pipeline {
     environment {
         // ── Registry ─────────────────────────────────────────
         GITLAB_REGISTRY  = 'registry.gitlab.com'
-        NAMESPACE        = 'webcastle-web'                            // ← CONFIGURE: GitLab group/namespace
-        PROJECT_NAME     = 'south-indian-urban-backend'                        // ← CONFIGURE: GitLab repo name (used as image name)
+        NAMESPACE        = 'webcastle-web'
+        PROJECT_NAME     = 'south-indian-urban-backend'
         IMAGE            = "${GITLAB_REGISTRY}/${NAMESPACE}/${PROJECT_NAME}"
         IMAGE_TAG        = "${IMAGE}:${env.BUILD_NUMBER}"
         IMAGE_LATEST     = "${IMAGE}:latest"
 
         // ── Vault ─────────────────────────────────────────────
-        VAULT_CRED_ID    = 'VAULT-TOKEN'                        // Jenkins credential ID for Vault token
+        VAULT_CRED_ID    = 'VAULT-TOKEN'
         VAULT_ADDR       = 'https://vault.devops.previewbay.com'
-        // VAULT_SECRET is set dynamically in the Init stage
 
         // ── Dokploy ───────────────────────────────────────────
         DOKPLOY_URL          = 'https://wc-1.previewbay.com'
-        DOKPLOY_APP_NAME     = 'south-indian-urban-backend'                     // ← CONFIGURE: app name in Dokploy
-        DOKPLOY_PROJECT_NAME = 'south-indian-urban'                         // ← CONFIGURE: Dokploy project name
-        // DOKPLOY_ENV_NAME is set dynamically in the Init stage
-        APP_PORT             = '1337'                           // ← CONFIGURE: port your app listens on
+        DOKPLOY_APP_NAME     = 'south-indian-urban-backend'
+        DOKPLOY_PROJECT_NAME = 'south-indian-urban'
+        APP_PORT             = '1337'
     }
 
     stages {
@@ -31,17 +29,17 @@ pipeline {
                 script {
                     def branch = env.GIT_BRANCH ?: env.BRANCH_NAME ?: ''
                     def target = (branch ==~ /.*(main|master)$/) ? 'production' : 'dev'
-                    
-                    env.TARGET_ENV = target
-                    env.VAULT_SECRET = "south-indian-urban/data/backend/${target}"
-                    env.DOKPLOY_ENV_NAME = target
-                    
+
+                    env.TARGET_ENV        = target
+                    env.VAULT_SECRET      = "south-indian-urban/data/backend/${target}"
+                    env.DOKPLOY_ENV_NAME  = target
+
                     echo "Configured for environment: ${target} (branch: ${branch})"
                 }
             }
         }
 
-        // ── Build ─────────────────────────────────────────────   
+        // ── Build ─────────────────────────────────────────────
         stage('Build') {
             steps {
                 sh "docker build -t ${IMAGE_TAG} -t ${IMAGE_LATEST} ."
@@ -72,7 +70,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'DOKPLOY_API_KEY',      variable: 'DOKPLOY_API_KEY'),
+                    string(credentialsId: 'DOKPLOY_API_KEY', variable: 'DOKPLOY_API_KEY'),
                     usernamePassword(credentialsId: 'JENKINS_V2_GITPAT', usernameVariable: 'CI_REGISTRY_USER', passwordVariable: 'CI_REGISTRY_PASSWORD'),
                     [
                         $class: 'VaultTokenCredentialBinding',
@@ -84,6 +82,11 @@ pipeline {
                         set -e
                         DOKPLOY_API="${DOKPLOY_URL}/api"
                         APP_DOMAIN="${DOKPLOY_APP_NAME}.wc-1.previewbay.com"
+
+                        UPLOADS_HOST_PATH="/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-uploads"
+                        DATABASE_HOST_PATH="/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-database"
+                        UPLOADS_CONTAINER_PATH="/opt/app/public/uploads"
+                        DATABASE_CONTAINER_PATH="/opt/app/database"
 
                         # ── Helper: Dokploy API with HTTP status check ─────────
                         api() {
@@ -101,7 +104,7 @@ pipeline {
                         }
 
                         # ── 0. Fetch env vars from Vault ───────────────────────
-                        echo "[0/5] Fetching env vars from Vault..."
+                        echo "[0/6] Fetching env vars from Vault..."
                         VAULT_RESP=\$(curl -sf -H "X-Vault-Token: \$VAULT_TOKEN" \\
                             "${VAULT_ADDR}/v1/${VAULT_SECRET}")
                         if [ -z "\$VAULT_RESP" ]; then
@@ -109,7 +112,6 @@ pipeline {
                             exit 1
                         fi
 
-                        # Build env string (arrays joined with comma)
                         ENV_VARS=\$(echo "\$VAULT_RESP" | jq -r '
                             .data.data | to_entries[] |
                             if (.value | type) == "array"
@@ -120,7 +122,7 @@ pipeline {
                         echo "  Env vars fetched."
 
                         # ── 1. Resolve PROJECT_ID ──────────────────────────────
-                        echo "[1/5] Resolving Dokploy project '${DOKPLOY_PROJECT_NAME}'..."
+                        echo "[1/6] Resolving Dokploy project '${DOKPLOY_PROJECT_NAME}'..."
                         ALL_PROJECTS=\$(api "\$DOKPLOY_API/project.all")
                         PROJECT_ID=\$(echo "\$ALL_PROJECTS" | \\
                             jq -r --arg name "${DOKPLOY_PROJECT_NAME}" \\
@@ -146,7 +148,7 @@ pipeline {
                         fi
 
                         # ── 2. Resolve ENV_ID ──────────────────────────────────
-                        echo "[2/5] Resolving environment '${DOKPLOY_ENV_NAME}'..."
+                        echo "[2/6] Resolving environment '${DOKPLOY_ENV_NAME}'..."
                         curl -sf \\
                             -H "x-api-key: \$DOKPLOY_API_KEY" \\
                             -H "Content-Type: application/json" \\
@@ -178,37 +180,42 @@ pipeline {
                         fi
 
                         # ── 3. Resolve APP_ID ──────────────────────────────────
-                        echo "[3/5] Resolving application '${DOKPLOY_APP_NAME}'..."
+                        echo "[3/6] Resolving application '${DOKPLOY_APP_NAME}'..."
                         curl -sf \\
                             -H "x-api-key: \$DOKPLOY_API_KEY" \\
                             -H "Content-Type: application/json" \\
                             "\$DOKPLOY_API/project.one?projectId=\$PROJECT_ID" \\
                             > /tmp/project_detail.json
+
                         APP_ID=\$(jq -r --arg envName "${DOKPLOY_ENV_NAME}" --arg appName "${DOKPLOY_APP_NAME}" \\
                             '.environments[] | select(.name == \$envName) | .applications[] | select(.name == \$appName) | .applicationId' \\
                             /tmp/project_detail.json 2>/dev/null | head -1)
 
-                        if [ -z "\$APP_ID" ] || [ "\$APP_ID" == "null" ]; then
+                        if [ -z "\$APP_ID" ] || [ "\$APP_ID" = "null" ]; then
                             echo "  Creating '${DOKPLOY_APP_NAME}'..."
                             CREATE_APP=\$(api -X POST "\$DOKPLOY_API/application.create" \\
-                                -d "\$(jq -n --arg name "${DOKPLOY_APP_NAME}" --arg proj "\$PROJECT_ID" --arg envId "\$ENV_ID" '{"name":\$name,"projectId":\$proj,"environmentId":\$envId}')")
+                                -d "\$(jq -n \\
+                                    --arg name "${DOKPLOY_APP_NAME}" \\
+                                    --arg proj "\$PROJECT_ID" \\
+                                    --arg envId "\$ENV_ID" \\
+                                    '{"name":\$name,"projectId":\$proj,"environmentId":\$envId}')")
                             APP_ID=\$(echo "\$CREATE_APP" | jq -r '.applicationId')
-                            echo "  Created application with ID: \$APP_ID"
+                            echo "  Created application: \$APP_ID"
                         else
-                            echo "  Found existing application: \$APP_ID. Updating it..."
+                            echo "  Found existing application: \$APP_ID"
                         fi
 
                         if [ -z "\$APP_ID" ] || [ "\$APP_ID" = "null" ]; then
                             echo "[ERROR] Could not resolve APP_ID." >&2; exit 1
                         fi
 
-                        # ── 4. Update image + env, then deploy ─────────────────
-                        echo "[4/5] Updating image & env vars, then deploying..."
+                        # ── 4. Update image + env vars ─────────────────────────
+                        echo "[4/6] Updating image & env vars..."
 
-                        # Refresh global GitLab registry credentials
                         REGISTRY_ID=\$(api "\$DOKPLOY_API/registry.all" | \\
                             jq -r --arg name "GitLab Backend Registry" \\
                             '.[] | select(.registryName == \$name) | .registryId' | head -1)
+
                         if [ -n "\$REGISTRY_ID" ] && [ "\$REGISTRY_ID" != "null" ]; then
                             api -X POST "\$DOKPLOY_API/registry.update" \\
                                 -d "\$(jq -n \\
@@ -219,7 +226,7 @@ pipeline {
                                     '{"registryId":\$id,"username":\$user,"password":\$pass,"imagePrefix":\$prefix}')" > /dev/null
                             echo "  Registry credentials refreshed."
                         else
-                            echo "  Registry not found. Creating a new registry..."
+                            echo "  Registry not found — creating..."
                             CREATE_REG=\$(api -X POST "\$DOKPLOY_API/registry.create" \\
                                 -d "\$(jq -n \\
                                     --arg name "GitLab Backend Registry" \\
@@ -241,18 +248,51 @@ pipeline {
                             '{"applicationId":\$appId,"sourceType":"docker","dockerImage":\$img,"port":\$port,"env":\$env} + (if \$regId != "" and \$regId != "null" then {"registryId":\$regId} else {} end)')
                         api -X POST "\$DOKPLOY_API/application.update" -d "\$UPDATE_PAYLOAD" > /dev/null
                         echo "  Image and env updated."
-                        
-                        echo "  Configuring persistent volume mounts..."
-                        # Mount 1: Uploads
-                        api -X POST "\$DOKPLOY_API/mount.create" \\
-                            -d "\$(jq -n --arg appId "\$APP_ID" --arg hostPath "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-uploads" --arg mountPath "/opt/app/public/uploads" '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null || echo "  [INFO] Uploads mount already exists or could not be created."
-                        
-                        # Mount 2: Database
-                        api -X POST "\$DOKPLOY_API/mount.create" \\
-                            -d "\$(jq -n --arg appId "\$APP_ID" --arg hostPath "/var/lib/dokploy/volumes/${DOKPLOY_APP_NAME}-${DOKPLOY_ENV_NAME}-database" --arg mountPath "/opt/app/database" '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null || echo "  [INFO] Database mount already exists or could not be created."
 
-                        # ── 5. Domain: create only if missing ─────────────────
-                        echo "[5/5] Configuring domain and certificate..."
+                        # ── 5. Volume mounts ───────────────────────────────────
+                        # Create host directories on the server (Jenkins runs on same host)
+                        echo "[5/6] Configuring persistent volume mounts..."
+
+                        mkdir -p "\$UPLOADS_HOST_PATH"
+                        mkdir -p "\$DATABASE_HOST_PATH"
+                        echo "  Host directories ready."
+
+                        # Fetch current mounts to avoid duplicates
+                        EXISTING_MOUNTS=\$(curl -sf \\
+                            -H "x-api-key: \$DOKPLOY_API_KEY" \\
+                            -H "Content-Type: application/json" \\
+                            "\$DOKPLOY_API/application.one?applicationId=\$APP_ID" | \\
+                            jq -r '.mounts[]?.mountPath' 2>/dev/null || echo "")
+
+                        # Mount: uploads
+                        if echo "\$EXISTING_MOUNTS" | grep -qx "\$UPLOADS_CONTAINER_PATH"; then
+                            echo "  Uploads mount already exists, skipping."
+                        else
+                            api -X POST "\$DOKPLOY_API/mount.create" \\
+                                -d "\$(jq -n \\
+                                    --arg appId "\$APP_ID" \\
+                                    --arg hostPath "\$UPLOADS_HOST_PATH" \\
+                                    --arg mountPath "\$UPLOADS_CONTAINER_PATH" \\
+                                    '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                            echo "  Uploads mount created: \$UPLOADS_HOST_PATH -> \$UPLOADS_CONTAINER_PATH"
+                        fi
+
+                        # Mount: database (SQLite fallback)
+                        if echo "\$EXISTING_MOUNTS" | grep -qx "\$DATABASE_CONTAINER_PATH"; then
+                            echo "  Database mount already exists, skipping."
+                        else
+                            api -X POST "\$DOKPLOY_API/mount.create" \\
+                                -d "\$(jq -n \\
+                                    --arg appId "\$APP_ID" \\
+                                    --arg hostPath "\$DATABASE_HOST_PATH" \\
+                                    --arg mountPath "\$DATABASE_CONTAINER_PATH" \\
+                                    '{"applicationId":\$appId,"type":"bind","hostPath":\$hostPath,"mountPath":\$mountPath}')" > /dev/null
+                            echo "  Database mount created: \$DATABASE_HOST_PATH -> \$DATABASE_CONTAINER_PATH"
+                        fi
+
+                        # ── 6. Domain (create only if missing) + Deploy ────────
+                        echo "[6/6] Configuring domain and deploying..."
+
                         DOMAIN_ID=\$(curl -sf \\
                             -H "x-api-key: \$DOKPLOY_API_KEY" \\
                             -H "Content-Type: application/json" \\
@@ -267,14 +307,14 @@ pipeline {
                                     --arg host "\$APP_DOMAIN" \\
                                     --argjson port ${APP_PORT} \\
                                     '{"applicationId":\$appId,"host":\$host,"port":\$port,"https":true,"certificateType":"letsencrypt","path":"/"}')" > /dev/null
-                            echo "  Domain created."
+                            echo "  Domain created: https://\$APP_DOMAIN"
                         else
                             echo "  Domain already exists, skipping."
                         fi
 
-                        # ── Deploy (no stop!) ──────────────────────────────────
+                        # Trigger deploy — no application.stop, no sleep
                         api -X POST "\$DOKPLOY_API/application.deploy" \\
-                            -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')"
+                            -d "\$(jq -n --arg appId "\$APP_ID" '{"applicationId":\$appId}')" > /dev/null
                         echo "  Deployment triggered! https://\$APP_DOMAIN"
                     """
                 }
