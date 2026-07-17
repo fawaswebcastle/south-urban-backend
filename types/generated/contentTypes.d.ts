@@ -807,6 +807,37 @@ export interface ApiNewsletterSectionNewsletterSection
   };
 }
 
+export interface ApiNotificationNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'notifications';
+  info: {
+    displayName: 'Notification';
+    pluralName: 'notifications';
+    singularName: 'notification';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    link: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::notification.notification'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServicesSectionServicesSection
   extends Struct.SingleTypeSchema {
   collectionName: 'services_sections';
@@ -1392,6 +1423,7 @@ declare module '@strapi/strapi' {
       'api::inquiry.inquiry': ApiInquiryInquiry;
       'api::loans-banner.loans-banner': ApiLoansBannerLoansBanner;
       'api::newsletter-section.newsletter-section': ApiNewsletterSectionNewsletterSection;
+      'api::notification.notification': ApiNotificationNotification;
       'api::services-section.services-section': ApiServicesSectionServicesSection;
       'api::subscription.subscription': ApiSubscriptionSubscription;
       'plugin::content-releases.release': PluginContentReleasesRelease;
