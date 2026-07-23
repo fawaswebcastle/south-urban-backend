@@ -34,6 +34,32 @@ export interface SharedBlogPost extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedGovernanceCategory extends Struct.ComponentSchema {
+  collectionName: 'components_shared_governance_categories';
+  info: {
+    displayName: 'governance-category';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    directors: Schema.Attribute.Component<'shared.governance-director', true>;
+    tag: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SharedGovernanceDirector extends Struct.ComponentSchema {
+  collectionName: 'components_shared_governance_directors';
+  info: {
+    displayName: 'governance-director';
+  };
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    designation: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedHeroSlide extends Struct.ComponentSchema {
   collectionName: 'components_shared_hero_slides';
   info: {
@@ -119,6 +145,8 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'gallery.gallery-category': GalleryGalleryCategory;
       'shared.blog-post': SharedBlogPost;
+      'shared.governance-category': SharedGovernanceCategory;
+      'shared.governance-director': SharedGovernanceDirector;
       'shared.hero-slide': SharedHeroSlide;
       'shared.job-position': SharedJobPosition;
       'shared.link': SharedLink;
