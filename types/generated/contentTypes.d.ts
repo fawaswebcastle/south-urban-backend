@@ -654,6 +654,35 @@ export interface ApiGallerySectionGallerySection
   };
 }
 
+export interface ApiGovernanceSectionGovernanceSection
+  extends Struct.SingleTypeSchema {
+  collectionName: 'governance_sections';
+  info: {
+    displayName: 'governance-section';
+    pluralName: 'governance-sections';
+    singularName: 'governance-section';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categories: Schema.Attribute.Component<'shared.governance-category', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::governance-section.governance-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
   collectionName: 'headers';
   info: {
@@ -1418,6 +1447,7 @@ declare module '@strapi/strapi' {
       'api::contact-section.contact-section': ApiContactSectionContactSection;
       'api::footer.footer': ApiFooterFooter;
       'api::gallery-section.gallery-section': ApiGallerySectionGallerySection;
+      'api::governance-section.governance-section': ApiGovernanceSectionGovernanceSection;
       'api::header.header': ApiHeaderHeader;
       'api::hero.hero': ApiHeroHero;
       'api::inquiry.inquiry': ApiInquiryInquiry;
