@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_bullet_items",
+  "info": {
+    "displayName": "BulletItem"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

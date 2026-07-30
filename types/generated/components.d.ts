@@ -17,11 +17,7 @@ export interface SharedBlogPost extends Struct.ComponentSchema {
     displayName: 'blog-post';
   };
   attributes: {
-    description: Schema.Attribute.Text &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 102;
-      }>;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     link: Schema.Attribute.String;
     linkLabel: Schema.Attribute.String;
@@ -31,6 +27,16 @@ export interface SharedBlogPost extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 68;
       }>;
+  };
+}
+
+export interface SharedBulletItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_bullet_items';
+  info: {
+    displayName: 'BulletItem';
+  };
+  attributes: {
+    text: Schema.Attribute.Text;
   };
 }
 
@@ -126,17 +132,11 @@ export interface SharedServiceItem extends Struct.ComponentSchema {
     displayName: 'service-item';
   };
   attributes: {
-    description: Schema.Attribute.Text &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 100;
-      }>;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
     iconName: Schema.Attribute.String;
     link: Schema.Attribute.String;
     linkLabel: Schema.Attribute.String;
-    title: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 28;
-      }>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -145,6 +145,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'gallery.gallery-category': GalleryGalleryCategory;
       'shared.blog-post': SharedBlogPost;
+      'shared.bullet-item': SharedBulletItem;
       'shared.governance-category': SharedGovernanceCategory;
       'shared.governance-director': SharedGovernanceDirector;
       'shared.hero-slide': SharedHeroSlide;

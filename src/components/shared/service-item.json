@@ -10,11 +10,11 @@
     },
     "title": {
       "type": "string",
-      "maxLength": 28
+      "required": true
     },
     "description": {
       "type": "text",
-      "maxLength": 100
+      "required": true
     },
     "link": {
       "type": "string"
