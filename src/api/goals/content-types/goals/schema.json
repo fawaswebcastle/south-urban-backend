@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "goals",
+  "info": {
+    "singularName": "goals",
+    "pluralName": "goalss",
+    "displayName": "Goals Section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "text"
+    },
+    "items": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "person",
+  "info": {
+    "singularName": "person",
+    "pluralName": "people",
+    "displayName": "Person (Leadership)"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "role": {
+      "type": "string",
+      "required": true
+    },
+    "group": {
+      "type": "string",
+      "required": true
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "photoPosition": {
+      "type": "string"
+    },
+    "teaser": {
+      "type": "text"
+    },
+    "bio": {
+      "type": "text"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "published": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

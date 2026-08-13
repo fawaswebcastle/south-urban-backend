@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_tabs",
+  "info": {
+    "displayName": "Tab",
+    "icon": "bullet_list",
+    "description": "Tab item with label, title and body text"
+  },
+  "options": {},
+  "attributes": {
+    "tabId": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "body": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "membership",
+  "info": {
+    "singularName": "membership",
+    "pluralName": "memberships",
+    "displayName": "Membership Section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "text"
+    },
+    "who": {
+      "type": "json"
+    },
+    "rights": {
+      "type": "json"
+    }
+  }
+}

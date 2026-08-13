@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_facts",
+  "info": {
+    "displayName": "Fact Metric",
+    "icon": "chart_pie",
+    "description": "Stat metric card with value and label"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

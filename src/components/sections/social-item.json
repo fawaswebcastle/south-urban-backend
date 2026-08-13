@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_social_items",
+  "info": {
+    "displayName": "Social Item",
+    "icon": "share_alt",
+    "description": "Header social link"
+  },
+  "options": {},
+  "attributes": {
+    "platform": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

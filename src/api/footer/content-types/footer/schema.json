@@ -1,74 +1,50 @@
 {
   "kind": "singleType",
-  "collectionName": "footers",
+  "collectionName": "footer",
   "info": {
     "singularName": "footer",
     "pluralName": "footers",
-    "displayName": "footer "
+    "displayName": "Footer",
+    "description": "Footer settings, links, contact details, and copyright notices"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
-      "type": "string"
-    },
-    "subtitle": {
-      "type": "string"
-    },
-    "logo": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "description": {
       "type": "text"
     },
+    "regText": {
+      "type": "string"
+    },
+    "areaText": {
+      "type": "string"
+    },
+    "quickLinksTitle": {
+      "type": "string"
+    },
     "quickLinks": {
       "type": "component",
-      "component": "shared.link",
-      "repeatable": true
+      "repeatable": true,
+      "component": "sections.nav-item"
     },
-    "policyLinks": {
-      "type": "component",
-      "component": "shared.link",
-      "repeatable": true
-    },
-    "facebookLink": {
+    "contactTitle": {
       "type": "string"
     },
-    "instagramLink": {
+    "phone": {
       "type": "string"
     },
-    "linkedinLink": {
+    "email": {
       "type": "string"
     },
-    "twitterLink": {
+    "address": {
       "type": "string"
     },
-    "youtubeLink": {
+    "copyright": {
       "type": "string"
     },
-    "copyrightText": {
-      "type": "string"
-    },
-    "poweredByLogo": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "poweredByLink": {
-      "type": "string"
-    },
-    "quickLinksHeader": {
-      "type": "string"
-    },
-    "contactHeader": {
+    "actText": {
       "type": "string"
     }
   }

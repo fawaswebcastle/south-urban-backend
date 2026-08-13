@@ -1,141 +1,83 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
-export interface GalleryGalleryCategory extends Struct.ComponentSchema {
-  collectionName: 'components_gallery_gallery_categories';
+export interface SectionsFact extends Struct.ComponentSchema {
+  collectionName: 'components_sections_facts';
   info: {
-    displayName: 'Gallery Category';
+    description: 'Stat metric card with value and label';
+    displayName: 'Fact Metric';
+    icon: 'chart_pie';
   };
   attributes: {
-    category: Schema.Attribute.String & Schema.Attribute.Required;
-    images: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
-  };
-}
-
-export interface SharedBlogPost extends Struct.ComponentSchema {
-  collectionName: 'components_shared_blog_posts';
-  info: {
-    displayName: 'blog-post';
-  };
-  attributes: {
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
-    image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
-    link: Schema.Attribute.String;
-    linkLabel: Schema.Attribute.String;
-    readTime: Schema.Attribute.String;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 68;
-      }>;
-  };
-}
-
-export interface SharedBulletItem extends Struct.ComponentSchema {
-  collectionName: 'components_shared_bullet_items';
-  info: {
-    displayName: 'BulletItem';
-  };
-  attributes: {
-    text: Schema.Attribute.Text;
-  };
-}
-
-export interface SharedGovernanceCategory extends Struct.ComponentSchema {
-  collectionName: 'components_shared_governance_categories';
-  info: {
-    displayName: 'governance-category';
-  };
-  attributes: {
-    description: Schema.Attribute.Text;
-    directors: Schema.Attribute.Component<'shared.governance-director', true>;
-    tag: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface SharedGovernanceDirector extends Struct.ComponentSchema {
-  collectionName: 'components_shared_governance_directors';
-  info: {
-    displayName: 'governance-director';
-  };
-  attributes: {
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
-    designation: Schema.Attribute.String & Schema.Attribute.Required;
-    image: Schema.Attribute.Media<'images'>;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface SharedHeroSlide extends Struct.ComponentSchema {
-  collectionName: 'components_shared_hero_slides';
-  info: {
-    displayName: 'Hero Slide';
-  };
-  attributes: {
-    ctaLink: Schema.Attribute.String;
-    ctaText: Schema.Attribute.String;
-    headingHighlighted: Schema.Attribute.String;
-    headingPrefix: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
-      Schema.Attribute.Required;
-    secondaryCtaLink: Schema.Attribute.String;
-    secondaryCtaText: Schema.Attribute.String;
-    subtitle: Schema.Attribute.Text;
-  };
-}
-
-export interface SharedJobPosition extends Struct.ComponentSchema {
-  collectionName: 'components_shared_job_positions';
-  info: {
-    displayName: 'job-position';
-  };
-  attributes: {
-    applyLink: Schema.Attribute.String & Schema.Attribute.Required;
-    applyText: Schema.Attribute.String & Schema.Attribute.Required;
-    department: Schema.Attribute.String;
-    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    location: Schema.Attribute.String;
-    tags: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    type: Schema.Attribute.String;
-  };
-}
-
-export interface SharedLink extends Struct.ComponentSchema {
-  collectionName: 'components_shared_links';
-  info: {
-    displayName: 'Link';
-  };
-  attributes: {
-    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     label: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SectionsNavItem extends Struct.ComponentSchema {
+  collectionName: 'components_sections_nav_items';
+  info: {
+    description: 'Header navigation link';
+    displayName: 'Nav Item';
+    icon: 'link';
+  };
+  attributes: {
+    href: Schema.Attribute.String & Schema.Attribute.Required;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SectionsOfferItem extends Struct.ComponentSchema {
+  collectionName: 'components_sections_offer_items';
+  info: {
+    description: 'Accordion item for what we offer section';
+    displayName: 'Offer Item';
+    icon: 'bullet_list';
+  };
+  attributes: {
+    body: Schema.Attribute.Text & Schema.Attribute.Required;
+    summary: Schema.Attribute.Text & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SectionsPillar extends Struct.ComponentSchema {
+  collectionName: 'components_sections_pillars';
+  info: {
+    description: 'Commitment pillar card with icon, title and description';
+    displayName: 'Pillar';
+    icon: 'shield';
+  };
+  attributes: {
+    desc: Schema.Attribute.Text & Schema.Attribute.Required;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface SectionsSocialItem extends Struct.ComponentSchema {
+  collectionName: 'components_sections_social_items';
+  info: {
+    description: 'Header social link';
+    displayName: 'Social Item';
+    icon: 'share_alt';
+  };
+  attributes: {
+    platform: Schema.Attribute.String & Schema.Attribute.Required;
     url: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface SharedLogo extends Struct.ComponentSchema {
-  collectionName: 'components_shared_logos';
+export interface SectionsTab extends Struct.ComponentSchema {
+  collectionName: 'components_sections_tabs';
   info: {
-    displayName: 'Logo';
+    description: 'Tab item with label, title and body text';
+    displayName: 'Tab';
+    icon: 'bullet_list';
   };
   attributes: {
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    redirectUrl: Schema.Attribute.String & Schema.Attribute.DefaultTo<'/'>;
-    subtitle: Schema.Attribute.String;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface SharedServiceItem extends Struct.ComponentSchema {
-  collectionName: 'components_shared_service_items';
-  info: {
-    displayName: 'service-item';
-  };
-  attributes: {
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
-    iconName: Schema.Attribute.String;
-    link: Schema.Attribute.String;
-    linkLabel: Schema.Attribute.String;
+    body: Schema.Attribute.Text & Schema.Attribute.Required;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    tabId: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -143,16 +85,12 @@ export interface SharedServiceItem extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'gallery.gallery-category': GalleryGalleryCategory;
-      'shared.blog-post': SharedBlogPost;
-      'shared.bullet-item': SharedBulletItem;
-      'shared.governance-category': SharedGovernanceCategory;
-      'shared.governance-director': SharedGovernanceDirector;
-      'shared.hero-slide': SharedHeroSlide;
-      'shared.job-position': SharedJobPosition;
-      'shared.link': SharedLink;
-      'shared.logo': SharedLogo;
-      'shared.service-item': SharedServiceItem;
+      'sections.fact': SectionsFact;
+      'sections.nav-item': SectionsNavItem;
+      'sections.offer-item': SectionsOfferItem;
+      'sections.pillar': SectionsPillar;
+      'sections.social-item': SectionsSocialItem;
+      'sections.tab': SectionsTab;
     }
   }
 }

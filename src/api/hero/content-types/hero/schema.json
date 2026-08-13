@@ -1,20 +1,38 @@
 {
   "kind": "singleType",
-  "collectionName": "heroes",
+  "collectionName": "hero",
   "info": {
     "singularName": "hero",
-    "pluralName": "heroes",
-    "displayName": "Hero"
+    "pluralName": "heros",
+    "displayName": "Hero Section"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "slides": {
-      "type": "component",
-      "component": "shared.hero-slide",
-      "repeatable": true
+    "badge": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "actionText": {
+      "type": "string"
+    },
+    "actionUrl": {
+      "type": "string"
+    },
+    "bgImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "coop_activities",
+  "info": {
+    "singularName": "coop-activities",
+    "pluralName": "coop-activitiess",
+    "displayName": "Cooperative Activities"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "text"
+    },
+    "items": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "overview",
+  "info": {
+    "singularName": "overview",
+    "pluralName": "overviews",
+    "displayName": "Overview Section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "text"
+    },
+    "paragraphs": {
+      "type": "json"
+    }
+  }
+}

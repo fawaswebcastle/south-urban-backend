@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "notifications",
+  "collectionName": "notification",
   "info": {
     "singularName": "notification",
     "pluralName": "notifications",
-    "displayName": "Notification"
+    "displayName": "Notification (Announcement)"
   },
   "options": {
     "draftAndPublish": true
@@ -15,12 +15,27 @@
       "type": "string",
       "required": true
     },
+    "summary": {
+      "type": "text"
+    },
     "date": {
-      "type": "datetime",
+      "type": "string",
       "required": true
     },
-    "link": {
+    "category": {
       "type": "string"
+    },
+    "hasDownload": {
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "published": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

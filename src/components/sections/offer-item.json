@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_offer_items",
+  "info": {
+    "displayName": "Offer Item",
+    "icon": "bullet_list",
+    "description": "Accordion item for what we offer section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    },
+    "body": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

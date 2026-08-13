@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "objectives",
+  "info": {
+    "singularName": "objectives",
+    "pluralName": "objectivess",
+    "displayName": "Objectives Section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "items": {
+      "type": "json"
+    }
+  }
+}

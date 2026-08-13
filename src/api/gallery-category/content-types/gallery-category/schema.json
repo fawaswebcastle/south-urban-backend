@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gallery_categories",
+  "info": {
+    "singularName": "gallery-category",
+    "pluralName": "gallery-categories",
+    "displayName": "Gallery Category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    },
+    "gallery_items": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::gallery-item.gallery-item",
+      "mappedBy": "gallery_category"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "kind": "singleType",
-  "collectionName": "headers",
+  "collectionName": "header",
   "info": {
     "singularName": "header",
     "pluralName": "headers",
@@ -11,26 +11,32 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "logo": {
-      "type": "component",
-      "component": "shared.logo",
-      "repeatable": false
-    },
-    "menuLinks": {
-      "type": "component",
-      "component": "shared.link",
-      "repeatable": true
-    },
     "phone": {
       "type": "string"
     },
-    "email": {
+    "contactBtnLabel": {
       "type": "string"
     },
-    "ctaButton": {
+    "contactBtnHref": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "navItems": {
       "type": "component",
-      "component": "shared.link",
-      "repeatable": false
+      "repeatable": true,
+      "component": "sections.nav-item"
+    },
+    "socials": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.social-item"
     }
   }
 }

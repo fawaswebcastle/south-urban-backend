@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "values",
+  "info": {
+    "singularName": "values",
+    "pluralName": "valuess",
+    "displayName": "Values Section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "text"
+    },
+    "items": {
+      "type": "json"
+    }
+  }
+}

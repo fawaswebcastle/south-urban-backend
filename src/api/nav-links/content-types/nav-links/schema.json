@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "nav_links",
+  "info": {
+    "singularName": "nav-links",
+    "pluralName": "nav-linkss",
+    "displayName": "Main Nav Links"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "items": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "kind": "singleType",
+  "collectionName": "branding",
+  "info": {
+    "singularName": "branding",
+    "pluralName": "brandings",
+    "displayName": "Branding & Logo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
