@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "blog_seos",
+  "info": {
+    "singularName": "blog-seo",
+    "pluralName": "blog-seos",
+    "displayName": "[SEO] Blog Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

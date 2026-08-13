@@ -4,18 +4,28 @@
   "info": {
     "singularName": "vision",
     "pluralName": "visions",
-    "displayName": "Vision Statement"
+    "displayName": "[About] Vision"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
+    "tag": {
+      "type": "string"
+    },
     "title": {
       "type": "string"
     },
     "statement": {
       "type": "text"
+    },
+    "bgImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

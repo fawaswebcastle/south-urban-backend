@@ -4,7 +4,7 @@
   "info": {
     "singularName": "hero",
     "pluralName": "heros",
-    "displayName": "Hero Section"
+    "displayName": "[Home] Hero"
   },
   "options": {
     "draftAndPublish": true
@@ -33,6 +33,11 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }

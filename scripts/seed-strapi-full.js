@@ -101,8 +101,18 @@ const siteData = {
     newsletterSubtitle: "Subscribe for news, updates, and offers from South Urban."
   },
   'company-details': {
+    tag: "Company details",
+    title: "Constituted under the MSCS Act, 2002",
+    intro: "SOUTH URBAN AGRO MULTI STATE CO-OP SOCIETY LIMITED is being established as an Agro-Focused Multi-State Cooperative Society under the MSCS Act, 2002. The Society aims to become a professionally managed, member-centric institution operating across Kerala and Tamil Nadu.",
+    bannerTitle: "One membership, two states",
+    bannerSubtitle: "Kerala and Tamil Nadu, on a single Society record.",
+    rows: [
+      { label: "Date of registration", value: "15th Jan, 2026" },
+      { label: "Registration number", value: "MSCS/CR/1664/2026" },
+      { label: "Address", value: "Kishanu Square, First Floor, Power House Jn, Viyur – Thrissur 680010" },
+      { label: "Area of operation", value: "Kerala, Tamil Nadu" }
+    ],
     regNo: "MSCS/CR/1664/2026",
-    title: "SOUTH URBAN AGRO MULTI STATE CO-OP SOCIETY LIMITED",
     subtitle: "Multi-State Co-operative Society Registered under MSCS Act, 2002",
     address: "Kishanu Square, First Floor, Power House Jn, Viyur – Thrissur 680010",
     phone: "+91 484 238 4900",
@@ -120,91 +130,228 @@ const siteData = {
     tag: "Cooperative overview",
     title: "What an Agro Multi-State Cooperative Society does",
     intro: "An Agro Multi-State Cooperative Society is a member-owned organization registered under the provisions of the Multi State Cooperative Societies Act, 2002.",
+    floatingCardTitle: "Incorporated under Central Registrar",
+    floatingCardSubtitle: "New Delhi, Ministry of Cooperation.",
     paragraphs: [
       "The society focuses on activities such as agricultural input supply, procurement and marketing of farm produce, food processing, warehousing, cold storage, and financial facilitation.",
       "By pooling resources and working collectively, members benefit from improved market access, better pricing, reduced input costs, and enhanced income opportunities."
     ]
   },
   vision: {
-    title: "Our Vision",
+    tag: "Vision",
+    title: "Vision",
     statement: "To be a premier, transparent, technology-driven, and member-centric Multi-State Cooperative that empowers farmers and rural communities across Kerala and Tamil Nadu through sustainable economic growth, innovation, and shared prosperity."
   },
   mission: {
-    title: "Our Mission",
-    statement: "We are committed to transforming the lives of farmers by delivering high-quality agricultural inputs, securing better price realization, and upholding transparent governance.",
-    bullets: [
-      "Delivering high-quality agricultural inputs at fair prices.",
-      "Securing better price realization through collective marketing.",
-      "Providing timely short-term credit to boost farm productivity.",
-      "Harnessing modern technology for seamless service delivery."
+    tag: "Mission",
+    label: "Mission",
+    title: "Mission",
+    lead: "We are committed to transforming the lives of farmers by",
+    items: [
+      {
+        __component: "sections.mission-item",
+        focus: "Inputs",
+        text: "Delivering high-quality agricultural inputs at fair and competitive prices."
+      },
+      {
+        __component: "sections.mission-item",
+        focus: "Markets",
+        text: "Securing better price realization for agricultural produce through efficient collective marketing."
+      },
+      {
+        __component: "sections.mission-item",
+        focus: "Credit",
+        text: "Providing timely and accessible short-term credit to enhance farm productivity and income."
+      },
+      {
+        __component: "sections.mission-item",
+        focus: "Governance",
+        text: "Upholding the highest standards of transparent governance and financial discipline."
+      },
+      {
+        __component: "sections.mission-item",
+        focus: "Technology",
+        text: "Harnessing modern technology for efficient, accountable, and seamless service delivery."
+      }
     ]
   },
   objectives: {
     tag: "Objectives",
-    title: "Four Commitments",
+    title: "Four commitments that shape the working day",
     items: [
-      { title: "Member-Centric Service Excellence", desc: "Provide quality agricultural inputs at fair prices and ensure better price realization." },
-      { title: "Financial Empowerment", desc: "Offer timely short-term credit to members to boost agricultural productivity." },
-      { title: "Transparency & Good Governance", desc: "Maintain strong financial discipline and the highest levels of transparency." },
-      { title: "Technological Advancement", desc: "Leverage modern technology for efficient, paperless service delivery." }
+      {
+        __component: "sections.activity",
+        icon: "BadgeCheck",
+        title: "Member-Centric Service Excellence",
+        desc: "Provide quality agricultural inputs at fair prices and ensure better price realization."
+      },
+      {
+        __component: "sections.activity",
+        icon: "HandCoins",
+        title: "Financial Empowerment",
+        desc: "Offer timely short-term credit to members to boost agricultural productivity."
+      },
+      {
+        __component: "sections.activity",
+        icon: "ShieldCheck",
+        title: "Transparency & Good Governance",
+        desc: "Maintain strong financial discipline and the highest levels of transparency."
+      },
+      {
+        __component: "sections.activity",
+        icon: "TrendingUp",
+        title: "Technological Advancement",
+        desc: "Leverage modern technology for efficient, paperless service delivery."
+      }
     ]
   },
   goals: {
-    tag: "Strategic Goals",
-    title: "Target Milestones",
-    intro: "Our primary goals are to provide quality agricultural inputs, ensure price realization, and deliver timely credit.",
+    tag: "Goals",
+    label: "Goals",
+    title: "What we are working towards",
+    statement: "To build owned funds, extend short-term credit, establish member cold storage and processing infrastructure, and expand membership to thousands of farming families across Kerala and Tamil Nadu — operating transparently under central cooperative regulation.",
+    intro: "To build owned funds, extend short-term credit, establish member cold storage and processing infrastructure, and expand membership to thousands of farming families across Kerala and Tamil Nadu.",
+    primaryCtaLabel: "Explore our services",
+    primaryCtaHref: "/#services",
+    secondaryCtaLabel: "Talk to the Society",
+    secondaryCtaHref: "/#contact",
     items: [
       { title: "Member Base", desc: "Expand member base across Kerala and Tamil Nadu." },
       { title: "Financial Inclusion", desc: "Promote member thrift and savings schemes." }
     ]
   },
   values: {
-    tag: "Core Values",
-    title: "Seven Principles Our Members Hold Us To",
+    tag: "Values",
+    title: "Seven principles our members hold us to",
     intro: "Guided by ethical principles in every decision.",
+    tileText: "Every member has one equal voice, and a share in what the Society earns.",
     items: [
-      { title: "Transparency", desc: "Open, honest, and accountable operations in all our dealings." },
-      { title: "Farmer Centricity", desc: "Our members and their prosperity are at the heart of every decision." },
-      { title: "Integrity", desc: "We uphold the highest ethical standards and honour our commitments." },
-      { title: "Excellence", desc: "Quality and continuous improvement in our products and services." },
-      { title: "Innovation", desc: "We embrace technology and modern solutions to serve members better." },
-      { title: "Collaboration", desc: "We work with farmers and communities for collective success." },
-      { title: "Sustainability", desc: "Environmentally responsible growth, measured over the long term." }
+      {
+        __component: "sections.activity",
+        icon: "Eye",
+        title: "Transparency",
+        desc: "Open, honest, and accountable operations in all our dealings."
+      },
+      {
+        __component: "sections.activity",
+        icon: "Users2",
+        title: "Farmer Centricity",
+        desc: "Our members and their prosperity are at the heart of every decision."
+      },
+      {
+        __component: "sections.activity",
+        icon: "ShieldCheck",
+        title: "Integrity",
+        desc: "We uphold the highest ethical standards and honour our commitments."
+      },
+      {
+        __component: "sections.activity",
+        icon: "Gem",
+        title: "Excellence",
+        desc: "Quality and continuous improvement in our products, services, and processes."
+      },
+      {
+        __component: "sections.activity",
+        icon: "Lightbulb",
+        title: "Innovation",
+        desc: "We embrace technology and modern solutions to serve our members better."
+      },
+      {
+        __component: "sections.activity",
+        icon: "Handshake",
+        title: "Collaboration",
+        desc: "We work with farmers, communities, and stakeholders for collective success."
+      },
+      {
+        __component: "sections.activity",
+        icon: "Leaf",
+        title: "Sustainability",
+        desc: "Environmentally responsible growth, measured over the long term."
+      }
     ]
   },
   membership: {
-    tag: "Membership",
-    title: "Two Ways to Hold a Share",
-    intro: "The Board has opened a large-scale membership drive under Class A (₹110) and Class B (₹1,200).",
-    who: [
-      { title: "Class A", desc: "Entry membership minimum ₹110" },
-      { title: "Class B", desc: "Full share membership minimum ₹1,200" }
+    tag: "Becoming a member",
+    label: "Becoming a member",
+    title: "Two ways to hold a share",
+    intro: "The Board has opened a large-scale membership and share capital mobilization campaign to build a strong member base and increase owned funds. Membership is open under two classes.",
+    classes: [
+      {
+        __component: "sections.membership-class",
+        name: "Class A",
+        tagline: "Entry membership",
+        total: "₹110",
+        totalLabel: "Total minimum per member",
+        rows: [
+          { __component: "sections.membership-row", label: "Membership fee", value: "₹10" },
+          { __component: "sections.membership-row", label: "Documentation charges", value: "Nil" },
+          { __component: "sections.membership-row", label: "GST", value: "Nil" },
+          { __component: "sections.membership-row", label: "Minimum share contribution", value: "₹100" }
+        ]
+      },
+      {
+        __component: "sections.membership-class",
+        name: "Class B",
+        tagline: "Full share membership",
+        total: "₹1,200",
+        totalLabel: "Total minimum per member",
+        rows: [
+          { __component: "sections.membership-row", label: "Membership fee", value: "₹10" },
+          { __component: "sections.membership-row", label: "Documentation charges", value: "₹100" },
+          { __component: "sections.membership-row", label: "P&S", value: "₹90" },
+          { __component: "sections.membership-row", label: "Minimum share contribution", value: "₹1,000" }
+        ]
+      }
     ],
-    rights: [
-      { title: "Voting Rights", desc: "One member, one vote." },
-      { title: "Dividend Eligibility", desc: "Eligible for annual surplus distribution." }
-    ]
-  },
-  'coop-principles': {
-    tag: "Cooperative Principles",
-    title: "7 International Cooperative Principles",
-    intro: "Operates on democratic principles where each member has an equal voice.",
-    items: [
-      { title: "Voluntary & Open Membership", desc: "Open to all agricultural producers without discrimination." },
-      { title: "Democratic Member Control", desc: "Equal voting rights and member governance." }
+    documentsTag: "Documents required",
+    documents: [
+      { __component: "sections.document-item", icon: "FileText", label: "Application form" },
+      { __component: "sections.document-item", icon: "Camera", label: "Passport size photo × 2" },
+      { __component: "sections.document-item", icon: "IdCard", label: "Aadhaar card" },
+      { __component: "sections.document-item", icon: "CreditCard", label: "PAN card" },
+      { __component: "sections.document-item", icon: "ScrollText", label: "Ration card" }
     ]
   },
   'coop-activities': {
     tag: "Activities",
-    title: "Operational Activities",
-    intro: "Six key activity areas supporting farmers.",
+    title: "What the Society puts its resources behind",
     items: [
-      { title: "Agricultural Input Supply", desc: "Seeds, fertilisers, and crop protection sourced collectively." },
-      { title: "Procurement & Marketing", desc: "Farm produce aggregated and taken to better markets." },
-      { title: "Warehousing & Cold Storage", desc: "Storage letting members hold produce for a fairer price." },
-      { title: "Processing & Value Addition", desc: "Food processing and agro-based industry at member scale." },
-      { title: "Dairy & Livestock Development", desc: "Allied-sector support beyond the crop cycle." },
-      { title: "Rural Finance Facilitation", desc: "Short-term credit routed through the cooperative." }
+      {
+        __component: "sections.activity",
+        icon: "Sprout",
+        title: "Agricultural input supply",
+        desc: "Seeds, fertilisers and crop protection sourced collectively."
+      },
+      {
+        __component: "sections.activity",
+        icon: "ShoppingBasket",
+        title: "Procurement & marketing",
+        desc: "Farm produce aggregated and taken to better markets."
+      },
+      {
+        __component: "sections.activity",
+        icon: "Warehouse",
+        title: "Warehousing & cold storage",
+        desc: "Storage that lets members hold produce for a fairer price."
+      },
+      {
+        __component: "sections.activity",
+        icon: "PackageCheck",
+        title: "Processing & value addition",
+        desc: "Food processing and agro-based industry at member scale."
+      },
+      {
+        __component: "sections.activity",
+        icon: "Milk",
+        title: "Dairy & livestock development",
+        desc: "Allied-sector support beyond the crop cycle."
+      },
+      {
+        __component: "sections.activity",
+        icon: "HandCoins",
+        title: "Rural finance facilitation",
+        desc: "Short-term credit routed through the cooperative, not the moneylender."
+      }
     ]
   },
   'blog-intro': {
@@ -212,37 +359,20 @@ const siteData = {
     title: "Updates from South Urban Agro",
     intro: "Read our latest announcements, market analysis, and farming guides."
   },
-  socials: {
-    items: [
-      { name: "Facebook", href: "https://facebook.com" },
-      { name: "Instagram", href: "https://instagram.com" },
-      { name: "LinkedIn", href: "https://linkedin.com" }
-    ]
-  },
-  'nav-links': {
-    items: [
-      { label: "About Us", href: "#who-we-are" },
-      { label: "Services", href: "#services" },
-      { label: "Leadership", href: "#leadership" },
-      { label: "Careers", href: "#careers" },
-      { label: "Gallery", href: "#gallery" },
-      { label: "Blogs", href: "/blog" }
-    ]
-  },
   branding: {
     title: "South Urban Agro Multi State Co-operative Society Ltd."
   },
   header: {
     phone: "+91 484 238 4900",
     contactBtnLabel: "Contact Us",
-    contactBtnHref: "#contact",
+    contactBtnHref: "/#contact",
     navItems: [
-      { __component: "sections.nav-item", label: "About Us", href: "#who-we-are" },
-      { __component: "sections.nav-item", label: "Services", href: "#services" },
-      { __component: "sections.nav-item", label: "Leadership", href: "#leadership" },
-      { __component: "sections.nav-item", label: "Careers", href: "#careers" },
-      { __component: "sections.nav-item", label: "Gallery", href: "#gallery" },
-      { __component: "sections.nav-item", label: "Blogs", href: "/blog" }
+      { __component: "sections.nav-item", label: "About Us", href: "/about" },
+      { __component: "sections.nav-item", label: "Services", href: "/services" },
+      { __component: "sections.nav-item", label: "Leadership", href: "/leadership" },
+      { __component: "sections.nav-item", label: "Careers", href: "/careers" },
+      { __component: "sections.nav-item", label: "Gallery", href: "/gallery" },
+      { __component: "sections.nav-item", label: "Blogs", href: "/blogs" }
     ],
     socials: [
       { __component: "sections.social-item", platform: "facebook", url: "https://facebook.com" },
@@ -256,12 +386,12 @@ const siteData = {
     areaText: "Area of operation: Kerala, Tamil Nadu",
     quickLinksTitle: "QUICK LINKS",
     quickLinks: [
-      { __component: "sections.nav-item", label: "About Us", href: "#who-we-are" },
-      { __component: "sections.nav-item", label: "Services", href: "#services" },
-      { __component: "sections.nav-item", label: "Leadership", href: "#leadership" },
-      { __component: "sections.nav-item", label: "Careers", href: "#careers" },
-      { __component: "sections.nav-item", label: "Gallery", href: "#gallery" },
-      { __component: "sections.nav-item", label: "Blogs", href: "/blog" }
+      { __component: "sections.nav-item", label: "About Us", href: "/about" },
+      { __component: "sections.nav-item", label: "Services", href: "/services" },
+      { __component: "sections.nav-item", label: "Leadership", href: "/leadership" },
+      { __component: "sections.nav-item", label: "Careers", href: "/careers" },
+      { __component: "sections.nav-item", label: "Gallery", href: "/gallery" },
+      { __component: "sections.nav-item", label: "Blogs", href: "/blogs" }
     ],
     contactTitle: "GET IN TOUCH",
     phone: "+91 484 238 4900",
@@ -365,8 +495,86 @@ const collectionData = {
     { name: "Mr. Jomi De Panakkal", role: "Deputy Vice President – Administration", group: "management", photo: "/jomi_panakkal.jpg", teaser: "28+ years in project financing, HR and compliance.", bio: "Mr. Jomi De Panakkal brings over 28 years of experience in project financing, institutional funding, and financial strategy.", order: 10, published: true }
   ],
   post: [
-    { title: "Expanding Agricultural Credit in Southern India", slug: "expanding-agri-credit-south-india", excerpt: "How South Urban Agro is accelerating low-interest credit for smallholders across Kerala and Tamil Nadu.", category: "Finance", author: "Editorial Team", date: "2026-08-10", readTime: "4 min read", order: 1, published: true },
-    { title: "Modern Organic Farming Practices & Yield", slug: "modern-organic-farming-practices", excerpt: "Key guidelines for transitioning to high-value organic crops and improving soil health.", category: "Farming", author: "Agri Expert", date: "2026-08-01", readTime: "5 min read", order: 2, published: true }
+    {
+      title: "New Government Subsidies Available for Cooperative Members",
+      slug: "government-subsidies-for-cooperative-members",
+      excerpt: "A breakdown of the latest agricultural support schemes and how South Urban members can apply.",
+      category: "Schemes & Subsidies",
+      author: "Member Services Desk",
+      date: "2026-08-04",
+      readTime: "4 min read",
+      order: 1,
+      published: true,
+      body: [
+        { kind: "p", text: "A fresh round of central and state agricultural support has opened for the 2026–27 cycle, and a good share of it is reachable through a registered cooperative rather than by individual application." },
+        { kind: "h2", text: "What is on offer this cycle" },
+        { kind: "list", items: ["Farm mechanisation support — part-funding on tillers, transplanters, sprayers and small harvesting equipment.", "Bio-input and soil health assistance — subsidised organic manures, bio-fertilisers and micronutrients.", "Irrigation and water conservation — assistance on drip and sprinkler systems, farm ponds and pump sets."] },
+        { kind: "h2", text: "How to apply" },
+        { kind: "p", text: "Speak to your unit's field officer or visit the Society office at Viyur with your membership number." }
+      ]
+    },
+    {
+      title: "Rabi Season Price Outlook: What Farmers Should Prepare For",
+      slug: "rabi-season-price-outlook",
+      excerpt: "Commodity price forecasts for the upcoming Rabi season, and what they mean for planting decisions.",
+      category: "Market Intelligence",
+      author: "Market Intelligence Desk",
+      date: "2026-07-22",
+      readTime: "3 min read",
+      order: 2,
+      published: true,
+      body: [
+        { kind: "p", text: "Planting decisions made in the next few weeks will be settled at prices set months from now." },
+        { kind: "h2", text: "Key Market Trends" },
+        { kind: "list", items: ["Pulses continue to hold firm, supported by steady demand.", "Paddy remains stable, with procurement providing a floor.", "Spices remain the strongest margin opportunity for members with the land and patience for a longer cycle."] }
+      ]
+    },
+    {
+      title: "How Precision Agriculture is Changing Indian Cooperatives",
+      slug: "precision-agriculture-indian-cooperatives",
+      excerpt: "Drone mapping, soil sensors, and AI-powered advisory tools are entering the field — and cooperatives are how smallholders reach them.",
+      category: "Technology",
+      author: "Field Operations Desk",
+      date: "2026-07-09",
+      readTime: "4 min read",
+      order: 3,
+      published: true,
+      body: [
+        { kind: "p", text: "Precision agriculture has a reputation as something for large holdings. Through a cooperative, it stops being true, and that is the shift worth paying attention to." },
+        { kind: "h2", text: "Shared Machinery & Services" },
+        { kind: "p", text: "A spraying drone is out of reach for a two-acre holding and entirely sensible across two hundred acres of member land." }
+      ]
+    },
+    {
+      title: "South Urban Members Win State Cooperative Excellence Award",
+      slug: "state-cooperative-excellence-award",
+      excerpt: "Our member network was recognised for outstanding contribution to farmer welfare across Kerala and Tamil Nadu.",
+      category: "Society News",
+      author: "Communications Desk",
+      date: "2026-06-28",
+      readTime: "3 min read",
+      order: 4,
+      published: true,
+      body: [
+        { kind: "p", text: "The Society's member network has been recognised with a State Cooperative Excellence Award for its contribution to farmer welfare." },
+        { kind: "h2", text: "Award Citation Highlights" },
+        { kind: "list", items: ["Input supply extended into remote hamlets.", "A measurable shift from informal moneylenders to Society credit terms.", "Sustained participation in farmer training and field demonstration programmes."] }
+      ]
+    },
+    {
+      title: "Expanding Low-Interest Agricultural Credit in Southern India",
+      slug: "expanding-low-interest-agri-credit-south-india",
+      excerpt: "How South Urban Agro is accelerating low-interest micro-finance and farm credit for smallholders across Kerala and Tamil Nadu.",
+      category: "Finance & Credit",
+      author: "Credit Operations Team",
+      date: "2026-06-15",
+      readTime: "5 min read",
+      order: 5,
+      published: true,
+      body: [
+        { kind: "p", text: "Access to affordable credit is the foundation of agricultural productivity. South Urban Agro continues to provide low-interest credit tailored for small and marginal farmers." }
+      ]
+    }
   ],
   service: [
     { title: "Member Thrift & Contribution Schemes", summary: "Recurring, fixed and long-term savings plans for members.", body: "The Society offers a range of thrift and contribution schemes exclusively for its members to encourage regular savings and disciplined financial planning.", order: 1, published: true },

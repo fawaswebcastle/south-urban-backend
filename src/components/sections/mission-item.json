@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_mission_items",
+  "info": {
+    "displayName": "Mission Item",
+    "icon": "target",
+    "description": "Mission commitment item with focus label and text description"
+  },
+  "options": {},
+  "attributes": {
+    "focus": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "text",
+      "required": true
+    }
+  }
+}

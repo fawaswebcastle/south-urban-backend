@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_sections_membership_classes",
+  "info": {
+    "displayName": "Membership Class",
+    "icon": "credit-card",
+    "description": "Membership class card with name, tagline, total, totalLabel, and fee rows"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "total": {
+      "type": "string",
+      "required": true
+    },
+    "totalLabel": {
+      "type": "string"
+    },
+    "rows": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.membership-row"
+    }
+  }
+}

@@ -55,6 +55,11 @@
     "published": {
       "type": "boolean",
       "default": true
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
     }
   }
 }

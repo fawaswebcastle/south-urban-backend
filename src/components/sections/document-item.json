@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_document_items",
+  "info": {
+    "displayName": "Document Item",
+    "icon": "file",
+    "description": "Required document item with icon name, icon image upload, and label"
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "string"
+    },
+    "iconMedia": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "membership",
     "pluralName": "memberships",
-    "displayName": "Membership Section"
+    "displayName": "[About] Membership"
   },
   "options": {
     "draftAndPublish": true
@@ -14,17 +14,34 @@
     "tag": {
       "type": "string"
     },
+    "label": {
+      "type": "string"
+    },
     "title": {
       "type": "string"
     },
     "intro": {
       "type": "text"
     },
-    "who": {
-      "type": "json"
+    "classes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.membership-class"
     },
-    "rights": {
-      "type": "json"
+    "documentsTag": {
+      "type": "string"
+    },
+    "documentsImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "documents": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.document-item"
     }
   }
 }

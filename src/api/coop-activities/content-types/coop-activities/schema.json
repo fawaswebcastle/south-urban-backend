@@ -4,7 +4,7 @@
   "info": {
     "singularName": "coop-activities",
     "pluralName": "coop-activitiess",
-    "displayName": "Cooperative Activities"
+    "displayName": "[About] Activities"
   },
   "options": {
     "draftAndPublish": true
@@ -17,11 +17,10 @@
     "title": {
       "type": "string"
     },
-    "intro": {
-      "type": "text"
-    },
     "items": {
-      "type": "json"
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.activity"
     }
   }
 }

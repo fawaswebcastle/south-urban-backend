@@ -4,7 +4,7 @@
   "info": {
     "singularName": "goals",
     "pluralName": "goalss",
-    "displayName": "Goals Section"
+    "displayName": "[About] Goals"
   },
   "options": {
     "draftAndPublish": true
@@ -14,14 +14,27 @@
     "tag": {
       "type": "string"
     },
-    "title": {
-      "type": "string"
-    },
-    "intro": {
+
+    "statement": {
       "type": "text"
     },
-    "items": {
-      "type": "json"
+
+    "bgImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "primaryCtaLabel": {
+      "type": "string"
+    },
+    "primaryCtaHref": {
+      "type": "string"
+    },
+    "secondaryCtaLabel": {
+      "type": "string"
+    },
+    "secondaryCtaHref": {
+      "type": "string"
     }
   }
 }

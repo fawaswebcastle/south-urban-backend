@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_sections_membership_rows",
+  "info": {
+    "displayName": "Membership Row",
+    "icon": "list",
+    "description": "Fee row with label and value"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

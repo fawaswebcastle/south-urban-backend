@@ -4,7 +4,7 @@
   "info": {
     "singularName": "objectives",
     "pluralName": "objectivess",
-    "displayName": "Objectives Section"
+    "displayName": "[About] Objectives"
   },
   "options": {
     "draftAndPublish": true
@@ -17,8 +17,17 @@
     "title": {
       "type": "string"
     },
+    "sideImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "items": {
-      "type": "json"
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.activity"
     }
   }
 }

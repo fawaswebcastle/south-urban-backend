@@ -4,7 +4,7 @@
   "info": {
     "singularName": "values",
     "pluralName": "valuess",
-    "displayName": "Values Section"
+    "displayName": "[About] Core Values"
   },
   "options": {
     "draftAndPublish": true
@@ -20,8 +20,20 @@
     "intro": {
       "type": "text"
     },
+    "tileText": {
+      "type": "text"
+    },
+    "tileImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "items": {
-      "type": "json"
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.activity"
     }
   }
 }

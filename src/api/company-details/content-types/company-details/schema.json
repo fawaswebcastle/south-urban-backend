@@ -4,17 +4,39 @@
   "info": {
     "singularName": "company-details",
     "pluralName": "company-detailss",
-    "displayName": "Company Details"
+    "displayName": "[About] Company Details"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "regNo": {
+    "tag": {
       "type": "string"
     },
     "title": {
+      "type": "string"
+    },
+    "intro": {
+      "type": "text"
+    },
+    "bannerTitle": {
+      "type": "string"
+    },
+    "bannerSubtitle": {
+      "type": "string"
+    },
+    "bannerImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "rows": {
+      "type": "json"
+    },
+    "regNo": {
       "type": "string"
     },
     "subtitle": {

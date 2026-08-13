@@ -4,21 +4,29 @@
   "info": {
     "singularName": "mission",
     "pluralName": "missions",
-    "displayName": "Mission Statement"
+    "displayName": "[About] Mission"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
     "title": {
       "type": "string"
     },
-    "statement": {
+    "lead": {
       "type": "text"
     },
-    "bullets": {
-      "type": "json"
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "sections.mission-item"
     }
   }
 }
