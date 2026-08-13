@@ -478,6 +478,48 @@ const siteData = {
         body: "The Society provides practical market intelligence support to help members make informed production, marketing, and investment decisions. Timely information on agricultural commodity prices, market demand trends, weather patterns, input costs, export opportunities, and relevant government policies is collected, analysed, and shared with members. Regular updates on price movements, seasonal demand forecasts, and emerging opportunities help farmers and agripreneurs optimise crop planning, identify profitable markets, and improve price realisation. Through these initiatives, the Society aims to reduce market risks and strengthen the economic position of its members."
       }
     ]
+  },
+  'home-seo': {
+    seo: {
+      metaTitle: "South Urban Agro Multi State Co-operative Society Ltd.",
+      metaDescription: "A member-owned cooperative bringing fair inputs, honest credit and better markets to farmers across Kerala and Tamil Nadu. Registered under the MSCS Act, 2002.",
+      keywords: "agro multi state cooperative society, farmer cooperative Kerala, agricultural credit Tamil Nadu, MSCS Act 2002, South Urban Agro",
+      canonicalURL: "https://southurbanagro.com/",
+      openGraph: {
+        ogTitle: "South Urban Agro Multi State Co-operative Society Ltd.",
+        ogDescription: "A member-owned cooperative bringing fair inputs, honest credit and better markets to the people who grow our food.",
+        ogUrl: "https://southurbanagro.com/",
+        ogType: "website"
+      }
+    }
+  },
+  'about-seo': {
+    seo: {
+      metaTitle: "About Us | South Urban Agro Multi State Co-operative Society Ltd.",
+      metaDescription: "Learn how South Urban Agro is constituted under the MSCS Act, 2002, and how our vision, mission and values have served farming communities for 15+ years.",
+      keywords: "about south urban agro, cooperative society registration, MSCS Act 2002, farmer cooperative governance, vision mission values",
+      canonicalURL: "https://southurbanagro.com/about",
+      openGraph: {
+        ogTitle: "About South Urban Agro Multi State Co-operative Society Ltd.",
+        ogDescription: "Registered under the Multi State Cooperative Societies Act, 2002 — serving member farmers across Kerala and Tamil Nadu.",
+        ogUrl: "https://southurbanagro.com/about",
+        ogType: "website"
+      }
+    }
+  },
+  'blog-seo': {
+    seo: {
+      metaTitle: "Blog | News & Insights from South Urban Agro",
+      metaDescription: "Scheme breakdowns, price outlooks and field notes from the desks that work with South Urban Agro members every day.",
+      keywords: "agriculture blog, farming schemes India, cooperative society news, agri market intelligence, farmer subsidies",
+      canonicalURL: "https://southurbanagro.com/blog",
+      openGraph: {
+        ogTitle: "News & Insights from South Urban Agro",
+        ogDescription: "Scheme breakdowns, price outlooks and field notes from the desks that work with our members every day.",
+        ogUrl: "https://southurbanagro.com/blog",
+        ogType: "website"
+      }
+    }
   }
 };
 

@@ -16,7 +16,8 @@ export default {
           'hero', 'who-we-are', 'notice', 'contact', 'company-details', 'overview',
           'vision', 'mission', 'objectives', 'goals', 'values', 'membership',
           'coop-principles', 'coop-activities', 'blog-intro', 'socials', 'nav-links',
-          'branding', 'person', 'post', 'service', 'notification', 'gallery-item', 'what-we-offer', 'gallery-category', 'header', 'footer', 'enquiry', 'newsletter-subscription'
+          'branding', 'person', 'post', 'service', 'notification', 'gallery-item', 'what-we-offer', 'gallery-category', 'header', 'footer', 'enquiry', 'newsletter-subscription',
+          'home-seo', 'about-seo', 'blog-seo'
         ];
 
         const actionsToEnable = apis.flatMap((api) => [
