@@ -4,16 +4,12 @@ on:
   push:
     branches:
       - staging
-      - main
-      - master
     tags:
       - "v*.*.*"
 
   pull_request:
     branches:
       - staging
-      - main
-      - master
 
   workflow_dispatch:
 
