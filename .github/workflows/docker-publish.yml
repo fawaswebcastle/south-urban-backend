@@ -1,59 +1,50 @@
-name: Build and Push Backend Docker Image to GHCR
+name: Build and Push Backend Docker Image to Docker Hub
 
 on:
   push:
     branches:
       - staging
+      - main
     tags:
       - "v*.*.*"
 
   pull_request:
     branches:
       - staging
+      - main
 
   workflow_dispatch:
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: fawaswebcastle/southurban-backend
 
 jobs:
-  # ============================================================
-  # 1. CHECKOUT
-  # ============================================================
-  checkout:
-    name: Checkout Repository
+  build-and-push:
+    name: Build & Push Multi-Arch Docker Image
     runs-on: ubuntu-latest
-
-    outputs:
-      commit_sha: ${{ steps.commit.outputs.sha }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get commit SHA
-        id: commit
-        run: echo "sha=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+      - name: Set up QEMU (for multi-arch build)
+        uses: docker/setup-qemu-action@v3
 
-  # ============================================================
-  # 2. DOCKER METADATA
-  # ============================================================
-  metadata:
-    name: Generate Docker Metadata
-    runs-on: ubuntu-latest
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    outputs:
-      tags: ${{ steps.meta.outputs.tags }}
-      labels: ${{ steps.meta.outputs.labels }}
+      - name: Log in to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    steps:
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging' }}
             type=ref,event=branch
@@ -61,89 +52,15 @@ jobs:
             type=semver,pattern={{version}}
             type=sha,format=short
 
-  # ============================================================
-  # 3. BUILD DOCKER IMAGE
-  # ============================================================
-  build:
-    name: Build Docker Image
-    runs-on: ubuntu-latest
-
-    needs:
-      - checkout
-      - metadata
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker image
+      - name: Build and push multi-architecture Docker image
         uses: docker/build-push-action@v6
         with:
           context: ./
           file: ./Dockerfile
-
-          push: false
-
-          tags: ${{ needs.metadata.outputs.tags }}
-          labels: ${{ needs.metadata.outputs.labels }}
-
-          # Export image so the next job can use it
-          outputs: type=docker,dest=/tmp/backend-image.tar
-
+          platforms: linux/amd64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Upload Docker image
-        uses: actions/upload-artifact@v4
-        with:
-          name: backend-docker-image
-          path: /tmp/backend-image.tar
-          retention-days: 1
-
-  # ============================================================
-  # 4. PUSH TO GHCR
-  # ============================================================
-  push:
-    name: Push Docker Image to GHCR
-    runs-on: ubuntu-latest
-
-    needs:
-      - build
-      - metadata
-
-    # Don't push images from pull requests
-    if: github.event_name != 'pull_request'
-
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Download Docker image
-        uses: actions/download-artifact@v4
-        with:
-          name: backend-docker-image
-          path: /tmp
-
-      - name: Load Docker image
-        run: |
-          docker load --input /tmp/backend-image.tar
-
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push Docker image
-        run: |
-          echo "${{ needs.metadata.outputs.tags }}" | while IFS= read -r tag; do
-            if [ -n "$tag" ]; then
-              echo "Pushing $tag"
-              docker push "$tag"
-            fi
-          done
