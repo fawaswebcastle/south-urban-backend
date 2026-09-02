@@ -11,7 +11,7 @@ WORKDIR /opt/
 
 # Copy package.json and package-lock.json first to cache the npm install step
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --include=dev
 
 WORKDIR /opt/app
 COPY . .
