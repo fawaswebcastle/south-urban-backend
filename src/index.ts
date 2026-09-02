@@ -46,12 +46,5 @@ export default {
       console.warn('⚠️ [Strapi Bootstrap] Public permissions setup skipped:', err);
     }
 
-    // 2. Automatically seed baseline content if empty
-    try {
-      const seedData = require(path.join(strapi.dirs.app.root, 'scripts/seed-strapi-full.js'));
-      await seedData(strapi);
-    } catch (err) {
-      console.warn('⚠️ [Strapi Bootstrap] Baseline seed skipped:', err);
-    }
   },
 };
