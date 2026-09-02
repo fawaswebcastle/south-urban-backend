@@ -362,6 +362,13 @@ const siteData = {
   branding: {
     title: "South Urban Agro Multi State Co-operative Society Ltd."
   },
+  careers: {
+    tag: "JOIN OUR TEAM",
+    title: "Build your career with us",
+    description: "Be part of a mission-driven organization that creates lasting impact for farming communities.",
+    btnLabel: "Apply now",
+    btnHref: "/#contact"
+  },
   header: {
     phone: "+91 484 238 4900",
     contactBtnLabel: "Contact Us",

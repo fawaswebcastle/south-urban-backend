@@ -554,6 +554,38 @@ export interface ApiBrandingBranding extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiCareersCareers extends Struct.SingleTypeSchema {
+  collectionName: 'careers';
+  info: {
+    displayName: '[Home] Careers CTA';
+    pluralName: 'careers-list';
+    singularName: 'careers';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    btnHref: Schema.Attribute.String;
+    btnLabel: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::careers.careers'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tag: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCompanyDetailsCompanyDetails
   extends Struct.SingleTypeSchema {
   collectionName: 'company_details';
@@ -1913,6 +1945,7 @@ declare module '@strapi/strapi' {
       'api::blog-intro.blog-intro': ApiBlogIntroBlogIntro;
       'api::blog-seo.blog-seo': ApiBlogSeoBlogSeo;
       'api::branding.branding': ApiBrandingBranding;
+      'api::careers.careers': ApiCareersCareers;
       'api::company-details.company-details': ApiCompanyDetailsCompanyDetails;
       'api::contact.contact': ApiContactContact;
       'api::coop-activities.coop-activities': ApiCoopActivitiesCoopActivities;
