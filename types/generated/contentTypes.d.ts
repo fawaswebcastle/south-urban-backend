@@ -1074,6 +1074,7 @@ export interface ApiNotificationNotification
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.String & Schema.Attribute.Required;
+    document: Schema.Attribute.Media<'files' | 'images'>;
     hasDownload: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<

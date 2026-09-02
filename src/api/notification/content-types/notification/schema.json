@@ -29,6 +29,15 @@
       "type": "boolean",
       "default": false
     },
+    "document": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files",
+        "images"
+      ]
+    },
     "order": {
       "type": "integer",
       "default": 0
