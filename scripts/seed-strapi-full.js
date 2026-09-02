@@ -664,14 +664,13 @@ async function seedData(strapi) {
       if (!docId) {
         const created = await strapi.documents(uid).create({ data: val, status: 'draft' });
         docId = created?.documentId;
+        if (docId) {
+          await strapi.documents(uid).publish({ documentId: docId });
+        }
+        console.log(` ✅ [SingleType] Seeded (Draft & Published): ${key}`);
       } else {
-        await strapi.documents(uid).update({ documentId: docId, data: val, status: 'draft' });
+        console.log(` ℹ️ [SingleType] Already exists, skipping seed update: ${key}`);
       }
-
-      if (docId) {
-        await strapi.documents(uid).publish({ documentId: docId });
-      }
-      console.log(` ✅ [SingleType] Seeded (Draft & Published): ${key}`);
     } catch (e) {
       console.warn(` ⚠️ Could not seed SingleType ${key}:`, e.message);
     }
