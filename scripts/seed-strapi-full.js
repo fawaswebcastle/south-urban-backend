@@ -657,15 +657,19 @@ async function seedData(strapi) {
   for (const [key, val] of Object.entries(siteData)) {
     const uid = `api::${key}.${key}`;
     try {
-      const existing = await strapi.documents(uid).findFirst();
-      let doc;
-      if (!existing) {
-        doc = await strapi.documents(uid).create({ data: val, status: 'draft' });
+      const published = await strapi.documents(uid).findFirst({ status: 'published' });
+      const draft = await strapi.documents(uid).findFirst({ status: 'draft' });
+      let docId = published?.documentId || draft?.documentId;
+
+      if (!docId) {
+        const created = await strapi.documents(uid).create({ data: val, status: 'draft' });
+        docId = created?.documentId;
       } else {
-        doc = await strapi.documents(uid).update({ documentId: existing.documentId, data: val, status: 'draft' });
+        await strapi.documents(uid).update({ documentId: docId, data: val, status: 'draft' });
       }
-      if (doc?.documentId) {
-        await strapi.documents(uid).publish({ documentId: doc.documentId });
+
+      if (docId) {
+        await strapi.documents(uid).publish({ documentId: docId });
       }
       console.log(` ✅ [SingleType] Seeded (Draft & Published): ${key}`);
     } catch (e) {
