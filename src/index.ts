@@ -13,7 +13,7 @@ export default {
 
       if (publicRole) {
         const apis = [
-          'hero', 'who-we-are', 'notice', 'contact', 'company-details', 'overview',
+          'hero', 'who-we-are', 'about-who-we-are', 'notice', 'contact', 'company-details', 'overview',
           'vision', 'mission', 'objectives', 'goals', 'values', 'membership',
           'coop-principles', 'coop-activities', 'blog-intro', 'socials', 'nav-links',
           'branding', 'person', 'post', 'service', 'notification', 'gallery-item', 'what-we-offer', 'gallery-category', 'header', 'footer', 'careers', 'enquiry', 'newsletter-subscription',

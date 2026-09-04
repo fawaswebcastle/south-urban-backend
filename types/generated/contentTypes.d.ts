@@ -468,6 +468,39 @@ export interface ApiAboutSeoAboutSeo extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiAboutWhoWeAreAboutWhoWeAre extends Struct.SingleTypeSchema {
+  collectionName: 'about_who_we_are';
+  info: {
+    displayName: '[About] Who We Are';
+    pluralName: 'about-who-we-ares';
+    singularName: 'about-who-we-are';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    bannerImage: Schema.Attribute.Media<'images'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    facts: Schema.Attribute.Component<'sections.fact', true>;
+    lead: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::about-who-we-are.about-who-we-are'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tag: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    titleAccent: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiBlogIntroBlogIntro extends Struct.SingleTypeSchema {
   collectionName: 'blog_intro';
   info: {
@@ -1942,6 +1975,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about-seo.about-seo': ApiAboutSeoAboutSeo;
+      'api::about-who-we-are.about-who-we-are': ApiAboutWhoWeAreAboutWhoWeAre;
       'api::blog-intro.blog-intro': ApiBlogIntroBlogIntro;
       'api::blog-seo.blog-seo': ApiBlogSeoBlogSeo;
       'api::branding.branding': ApiBrandingBranding;
