@@ -966,6 +966,73 @@ export interface ApiHeroHero extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiHomeLeadershipSectionHomeLeadershipSection
+  extends Struct.SingleTypeSchema {
+  collectionName: 'home_leadership_sections';
+  info: {
+    description: 'Home page Leadership & Governance section header';
+    displayName: '[Home] Leadership Section';
+    pluralName: 'home-leadership-sections';
+    singularName: 'home-leadership-section';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    boardDirectorsLabel: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-leadership-section.home-leadership-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHomeNewsSectionHomeNewsSection
+  extends Struct.SingleTypeSchema {
+  collectionName: 'home_news_sections';
+  info: {
+    description: 'Home page News & Insights section header';
+    displayName: '[Home] News Section';
+    pluralName: 'home-news-sections';
+    singularName: 'home-news-section';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    buttonText: Schema.Attribute.String;
+    buttonUrl: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-news-section.home-news-section'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomeSeoHomeSeo extends Struct.SingleTypeSchema {
   collectionName: 'home_seos';
   info: {
@@ -988,6 +1055,38 @@ export interface ApiHomeSeoHomeSeo extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHomeVisualStoryHomeVisualStory
+  extends Struct.SingleTypeSchema {
+  collectionName: 'home_visual_stories';
+  info: {
+    description: 'Home page Visual Story (Gallery) section header';
+    displayName: '[Home] Visual Story';
+    pluralName: 'home-visual-stories';
+    singularName: 'home-visual-story';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-visual-story.home-visual-story'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    subtitle: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1990,7 +2089,10 @@ declare module '@strapi/strapi' {
       'api::goals.goals': ApiGoalsGoals;
       'api::header.header': ApiHeaderHeader;
       'api::hero.hero': ApiHeroHero;
+      'api::home-leadership-section.home-leadership-section': ApiHomeLeadershipSectionHomeLeadershipSection;
+      'api::home-news-section.home-news-section': ApiHomeNewsSectionHomeNewsSection;
       'api::home-seo.home-seo': ApiHomeSeoHomeSeo;
+      'api::home-visual-story.home-visual-story': ApiHomeVisualStoryHomeVisualStory;
       'api::membership.membership': ApiMembershipMembership;
       'api::mission.mission': ApiMissionMission;
       'api::newsletter-subscription.newsletter-subscription': ApiNewsletterSubscriptionNewsletterSubscription;

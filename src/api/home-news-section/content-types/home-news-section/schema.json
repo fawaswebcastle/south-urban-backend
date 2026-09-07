@@ -1,0 +1,31 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_news_sections",
+  "info": {
+    "singularName": "home-news-section",
+    "pluralName": "home-news-sections",
+    "displayName": "[Home] News Section",
+    "description": "Home page News & Insights section header"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "subtitle": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "buttonText": {
+      "type": "string"
+    },
+    "buttonUrl": {
+      "type": "string"
+    }
+  }
+}

@@ -359,6 +359,24 @@ const siteData = {
     title: "Updates from South Urban Agro",
     intro: "Read our latest announcements, market analysis, and farming guides."
   },
+  'home-news-section': {
+    subtitle: "NEWS & INSIGHTS",
+    heading: "Updates from South Urban Agro",
+    description: "Read our latest announcements, market analysis, and farming guides.",
+    buttonText: "View all articles",
+    buttonUrl: "/blog"
+  },
+  'home-visual-story': {
+    subtitle: "OUR VISUAL STORY",
+    heading: "From the field.",
+    description: "A glimpse of our farming community, sustainable practices, and daily operations."
+  },
+  'home-leadership-section': {
+    subtitle: "LEADERSHIP & GOVERNANCE",
+    heading: "The people accountable to our members.",
+    description: "Six directors and a four-person executive team. Select anyone to read their full background.",
+    boardDirectorsLabel: "Board Directors"
+  },
   branding: {
     title: "South Urban Agro Multi State Co-operative Society Ltd."
   },

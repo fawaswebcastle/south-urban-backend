@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_leadership_sections",
+  "info": {
+    "singularName": "home-leadership-section",
+    "pluralName": "home-leadership-sections",
+    "displayName": "[Home] Leadership Section",
+    "description": "Home page Leadership & Governance section header"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "subtitle": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "boardDirectorsLabel": {
+      "type": "string"
+    }
+  }
+}

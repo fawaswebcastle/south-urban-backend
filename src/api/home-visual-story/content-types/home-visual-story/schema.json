@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_visual_stories",
+  "info": {
+    "singularName": "home-visual-story",
+    "pluralName": "home-visual-stories",
+    "displayName": "[Home] Visual Story",
+    "description": "Home page Visual Story (Gallery) section header"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "subtitle": {
+      "type": "string"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}
