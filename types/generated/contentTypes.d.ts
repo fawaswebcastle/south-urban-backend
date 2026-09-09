@@ -1304,7 +1304,6 @@ export interface ApiOverviewOverview extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     floatingCardSubtitle: Schema.Attribute.String;
     floatingCardTitle: Schema.Attribute.String;
-    intro: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1314,6 +1313,7 @@ export interface ApiOverviewOverview extends Struct.SingleTypeSchema {
     mainImage: Schema.Attribute.Media<'images'>;
     paragraphs: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
+    secondaryImage: Schema.Attribute.Media<'images'>;
     tag: Schema.Attribute.String;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;

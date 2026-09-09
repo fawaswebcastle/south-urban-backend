@@ -17,13 +17,15 @@
     "title": {
       "type": "string"
     },
-    "intro": {
-      "type": "text"
-    },
     "paragraphs": {
       "type": "json"
     },
     "mainImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "secondaryImage": {
       "type": "media",
       "multiple": false,
       "allowedTypes": ["images"]
